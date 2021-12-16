@@ -25,15 +25,17 @@ public class DungeonFactory implements AbstractCreatureFactory{
                             .amount(aAmount)
                             .build();
                 case 3:
-                    return new Creature.Builder()
+                    Creature beholder = new Creature.Builder()
                             .statistic(CreatureStatistic.BEHOLDER)
                             .amount(aAmount)
                             .build();
+                    return new BlockCounterAttackCreatureDecorator(new ShootingCreatureDecorator(beholder));
                 case 4:
-                    return new Creature.Builder()
+                    Creature medusa = new Creature.Builder()
                             .statistic(CreatureStatistic.MEDUSA)
                             .amount(aAmount)
                             .build();
+                    return new BlockCounterAttackCreatureDecorator(new ShootingCreatureDecorator(medusa));
                 case 5:
                     return new Creature.Builder()
                             .statistic(CreatureStatistic.MINOTAUR)
@@ -65,15 +67,18 @@ public class DungeonFactory implements AbstractCreatureFactory{
                             .amount(aAmount)
                             .build();
                 case 3:
-                    return new Creature.Builder()
+                    Creature evilEye = new Creature.Builder()
                             .statistic(CreatureStatistic.EVIL_EYE)
                             .amount(aAmount)
                             .build();
+                    return new BlockCounterAttackCreatureDecorator(new ShootingCreatureDecorator(evilEye));
+
                 case 4:
-                    return new Creature.Builder()
+                    Creature medusaQueen = new Creature.Builder()
                             .statistic(CreatureStatistic.MEDUSA_QUEEN)
                             .amount(aAmount)
                             .build();
+                    return new BlockCounterAttackCreatureDecorator(new ShootingCreatureDecorator(medusaQueen));
                 case 5:
                     return new Creature.Builder()
                             .statistic(CreatureStatistic.MINOTAUR_KING)
