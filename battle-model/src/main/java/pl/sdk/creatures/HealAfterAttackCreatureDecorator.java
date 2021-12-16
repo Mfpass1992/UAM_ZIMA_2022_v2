@@ -4,23 +4,22 @@ import com.google.common.collect.Range;
 
 import java.beans.PropertyChangeEvent;
 
-class HealAfterAttackCreatureDecorator extends Creature{
+class HealAfterAttackCreatureDecorator extends AbstractCreatureDecorator{
 
     private double selfHealingPercentage;
-    private Creature decorated;
 
     HealAfterAttackCreatureDecorator(Creature aDecorated, double aSelfHealingPercentage) {
-        decorated = aDecorated;
+        super(aDecorated);
         selfHealingPercentage = aSelfHealingPercentage;
     }
 
     @Override
     public void attack(Creature aDefender) {
-        if (decorated.isAlive()){
-            int damageToDeal = decorated.calculateDamage(this, aDefender);
+        if (getDecorated().isAlive()){
+            int damageToDeal = getDecorated().calculateDamage(this, aDefender);
             aDefender.applyDamage(damageToDeal);
             healAfterAttack(damageToDeal);
-            decorated.counterAttack(aDefender);
+            getDecorated().counterAttack(aDefender);
         }
     }
 
@@ -28,93 +27,4 @@ class HealAfterAttackCreatureDecorator extends Creature{
         applyDamage((int)(-aDamageToDeal * selfHealingPercentage));
     }
 
-    @Override
-    protected int calculateDamage(Creature aAttacker, Creature aDefender) {
-        return decorated.calculateDamage(aAttacker, aDefender);
-    }
-
-    @Override
-    protected void setCurrentHpToMaximum() {
-        decorated.setCurrentHpToMaximum();
-    }
-
-    @Override
-    public double getAttackRange() {
-        return decorated.getAttackRange();
-    }
-
-    @Override
-    public boolean[][] getSplashRange() {
-        return decorated.getSplashRange();
-    }
-
-    @Override
-    protected void counterAttack(Creature aDefender) {
-        decorated.counterAttack(aDefender);
-    }
-
-    @Override
-    public void applyDamage(int aDamageToApply) {
-        decorated.applyDamage(aDamageToApply);
-    }
-
-    @Override
-    public boolean isAlive() {
-        return decorated.isAlive();
-    }
-
-    @Override
-    public int getCurrentHp() {
-        return decorated.getCurrentHp();
-    }
-
-    @Override
-    public String getName() {
-        return decorated.getName();
-    }
-
-    @Override
-    public boolean canCounterAttack() {
-        return decorated.canCounterAttack();
-    }
-
-    @Override
-    public int getMoveRange() {
-        return decorated.getMoveRange();
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent aPropertyChangeEvent) {
-        decorated.propertyChange(aPropertyChangeEvent);
-    }
-
-    @Override
-    public int getAttack() {
-        return decorated.getAttack();
-    }
-
-    @Override
-    public int getArmor() {
-        return decorated.getArmor();
-    }
-
-    @Override
-    public Range<Integer> getDamage() {
-        return decorated.getDamage();
-    }
-
-    @Override
-    public int getAmount() {
-        return decorated.getAmount();
-    }
-
-    @Override
-    public String currentHealth() {
-        return decorated.currentHealth();
-    }
-
-    @Override
-    public String toString() {
-        return decorated.toString();
-    }
 }
