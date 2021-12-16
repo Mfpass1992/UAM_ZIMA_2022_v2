@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.NecropolisFactory;
-import pl.sdk.pathfinder.AStar;
+//import pl.sdk.pathfinder.AStar;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -37,6 +37,7 @@ public class AStarTest {
         Point movePoint = new Point(0,3);
         path = astar.findPath(creaturePoint, movePoint);
         assertEquals(path.length(), 3);
+        assertEquals(path.get(path.size()-1), movePoint);
     }
 
     @Test
@@ -47,6 +48,7 @@ public class AStarTest {
         Point movePoint = new Point(0,3);
         path = astar.findPath(creaturePoint, movePoint);
         assertEquals(path.length(), 5);
+        assertEquals(path.get(path.size()-1), movePoint);
     }
 
     @Test
