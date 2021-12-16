@@ -24,7 +24,7 @@ public class DoubleAttackCreatureTest {
     void creatureShouldAttackTwice(){
         Creature doubleAttackCreature = new Creature.BuilderForTesting()
                 .name("Double attack")
-                .maxHp(NOT_IMPORTANT)
+                .maxHp(100)
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
                 .damage(Range.closed(NOT_IMPORTANT, NOT_IMPORTANT))
@@ -35,7 +35,7 @@ public class DoubleAttackCreatureTest {
 
         Creature normalCreature = new Creature.BuilderForTesting()
                 .name("Normal unit")
-                .maxHp(NOT_IMPORTANT)
+                .maxHp(100)
                 .attack(NOT_IMPORTANT)
                 .armor(NOT_IMPORTANT)
                 .damage(Range.closed(NOT_IMPORTANT, NOT_IMPORTANT))
@@ -45,13 +45,11 @@ public class DoubleAttackCreatureTest {
 
         CalculateDamageStrategy calc = new DefaultCalculateStrategy();
 
-        int damageToNormalCreature = calc.calculateDamage(doubleAttackCreature, normalCreature);
-        int damageToDoubleAttackCreature = calc.calculateDamage(normalCreature, doubleAttackCreature);
+        int doubleAttackCreatureDamage = calc.calculateDamage(doubleAttackCreature, normalCreature);
+        int normalCreatureDamage = calc.calculateDamage(normalCreature, doubleAttackCreature);
+        assertEquals(normalCreatureDamage*2, doubleAttackCreatureDamage);
 
-        doubleAttackCreature.attack(normalCreature);
 
-        assertEquals(normalCreature.getCurrentHp(), TEST.getMaxHp() - damageToNormalCreature);
-        assertEquals(doubleAttackCreature.getCurrentHp(), TEST.getMaxHp() - damageToDoubleAttackCreature);
 
     }
 
