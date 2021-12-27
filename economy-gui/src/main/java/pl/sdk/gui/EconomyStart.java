@@ -14,9 +14,16 @@ public class EconomyStart extends Application
     @Override
     public void start( Stage aStage ) throws Exception
     {
+        /* TODO : uncomment before committing
         List< EconomyHero > heroes = (new PickFractionAndHeroDialog(
             20000
             )).showDialog();
+        */
+        List< EconomyHero > heroes = List.of(
+            new EconomyHero( EconomyHero.Fraction.NECROPOLIS, 20000 ),
+            new EconomyHero( EconomyHero.Fraction.NECROPOLIS, 20000 )
+            );
+
         loadNewEconomy( aStage, heroes );
     }
 

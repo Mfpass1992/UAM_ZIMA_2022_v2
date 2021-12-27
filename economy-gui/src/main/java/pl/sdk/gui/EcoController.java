@@ -30,20 +30,30 @@ public class EcoController implements PropertyChangeListener
     @FXML private Label moneyLabel;
     @FXML private Button readyButton;
 
-    @FXML private VBox creaturesVBox;
-
     @FXML private HBox abilitiesHBox;
     @FXML private HBox spellsHBox;
     @FXML private HBox artifactsHBox;
     @FXML private HBox creaturesHBox;
 
+    @FXML private VBox abilitiesVBox;
+    @FXML private VBox spellsVBox;
+    @FXML private VBox creaturesVBox;
+    @FXML private VBox artifactsVBox;
+
     @FXML void initialize() throws Exception
     {
-        // TODO : checking if can start
         readyButton.setOnMouseClicked( (e) -> { economyEngine.pass(); } );
+        readyButton.setDisable( true );
 
-        loadPlayerPane( 1 );
+        refreshHeroPane( 1 );
+        refreshCreaturesBox();
+        refreshMoney();
 
+        initCreaturesTab();
+    }
+
+    private void initCreaturesTab() throws Exception
+    {
         // TODO : use correct factory
         EconomyNecropolisFactory factory = new EconomyNecropolisFactory();
         for (int i = 1; i < 8; i++) {
@@ -56,15 +66,16 @@ public class EcoController implements PropertyChangeListener
                 this
                 ) );
             }
-
-        for (int i = 1; i < 10; i++) {
-            abilitiesHBox.getChildren().add( new CreatureUnitButton( null ) );
-            spellsHBox.getChildren().add( new CreatureUnitButton( null ) );
-            artifactsHBox.getChildren().add( new CreatureUnitButton( null ) );
-            }
     }
 
-    private void loadPlayerPane( int playerNumber )
+    private void refreshReadyButton()
+    {
+        readyButton.setDisable(
+            economyEngine.getActiveHero().getCreatures().isEmpty()
+            );
+    }
+
+    private void refreshHeroPane( int playerNumber )
     {
         fractionLabel.setText( economyEngine.getActiveHero().getFraction().name() );
         heroImage.setImage( ImageLoader.loadHero( "none" ) ); // TODO : connect hero images
@@ -75,12 +86,9 @@ public class EcoController implements PropertyChangeListener
             case 2: { playerNumberLabel.setText( "PLAYER II" ); break; }
             default: throw new IllegalArgumentException( "playerNumber should be 1 or 2" );
         }
-
-        refreshMoney();
-        refreshCreatures();
     }
 
-    private void refreshCreatures()
+    private void refreshCreaturesBox()
     {
         creaturesHBox.getChildren().clear();
         for( EconomyCreature creature: economyEngine.getActiveHero().getCreatures() )
@@ -112,8 +120,12 @@ public class EcoController implements PropertyChangeListener
         this.stage = stage;
         this.economyEngine = new EconomyEngine( hero1, hero2 );
         economyEngine.addObserver(EconomyEngine.ACTIVE_HERO_CHANGED,this);
-        economyEngine.addObserver(EconomyEngine.HERO_BOUGHT_CREATURE,this);
-        economyEngine.addObserver(EconomyEngine.NEXT_ROUND,this);
+        economyEngine.addObserver(EconomyEngine.ECONOMY_FINISHED,this);
+        economyEngine.addObserver(EconomyEngine.MONEY_TRANSFER,this);
+        economyEngine.addObserver(EconomyEngine.CREATURE_BOUGHT_OR_SOLD,this);
+        economyEngine.addObserver(EconomyEngine.ARTIFACT_BOUGHT_OR_SOLD,this);
+        economyEngine.addObserver(EconomyEngine.SPELL_BOUGHT_OR_SOLD,this);
+        economyEngine.addObserver(EconomyEngine.ABILITY_BOUGHT_OR_SOLD,this);
     }
 
     public void goToBattle()
@@ -128,20 +140,21 @@ public class EcoController implements PropertyChangeListener
         switch( evt.getPropertyName() )
         {
             case EconomyEngine.ACTIVE_HERO_CHANGED: {
-                loadPlayerPane( 2 );
-                break;
-                }
-            case EconomyEngine.HERO_BOUGHT_CREATURE: {
-                try {
-                    refreshCreatures();
-                    refreshMoney();
-                    } catch( Exception e ) { e.printStackTrace(); }
-                break;
-                }
-            case EconomyEngine.NEXT_ROUND: {
+                refreshReadyButton();
+                refreshHeroPane( 2 );
+                refreshMoney();
+                refreshCreaturesBox();
+                break; }
+            case EconomyEngine.ECONOMY_FINISHED: {
                 goToBattle();
-                break;
-                }
+                break; }
+            case EconomyEngine.MONEY_TRANSFER: {
+                refreshMoney();
+                break; }
+            case EconomyEngine.CREATURE_BOUGHT_OR_SOLD: {
+                refreshCreaturesBox();
+                refreshReadyButton();
+                break; }
         }
     }
 
