@@ -7,10 +7,10 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import pl.sdk.creatures.EconomyCreature;
+import pl.sdk.gui.EcoController;
 import pl.sdk.gui.ImageLoader;
-import pl.sdk.gui.NewEcoController;
 
-public class NewCreatureButton extends Button
+public class CreatureButton extends Button
 {
 // region fxml
 
@@ -30,9 +30,9 @@ public class NewCreatureButton extends Button
 
     private final EconomyCreature creature;
 
-    public NewCreatureButton(
+    public CreatureButton(
         EconomyCreature creature,
-        NewEcoController controller
+        EcoController controller
         ) throws Exception
     {
         super();
