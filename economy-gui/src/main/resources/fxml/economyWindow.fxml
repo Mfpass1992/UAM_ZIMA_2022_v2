@@ -122,6 +122,22 @@
                 </font>
             </Label>
             <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE">
+                <Tab text="Creatures">
+               <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER">
+                  <content>
+                     <VBox fx:id="creaturesVBox" alignment="CENTER" />
+                  </content>
+               </ScrollPane>
+                </Tab>
+                <Tab text="Artifacts">
+               <content>
+                  <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER">
+                     <content>
+                        <VBox fx:id="creaturesVBox1" alignment="CENTER" />
+                     </content>
+                  </ScrollPane>
+               </content>
+                </Tab>
                 <Tab text="Spells">
                <content>
                   <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER">
@@ -131,27 +147,11 @@
                   </ScrollPane>
                </content>
                 </Tab>
-                <Tab text="Creatures">
-               <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER">
-                  <content>
-                     <VBox fx:id="creaturesVBox" alignment="CENTER" />
-                  </content>
-               </ScrollPane>
-                </Tab>
                 <Tab text="Abilities">
                <content>
                   <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER">
                      <content>
                         <VBox fx:id="abilitiesVBox" alignment="CENTER" />
-                     </content>
-                  </ScrollPane>
-               </content>
-                </Tab>
-                <Tab text="Artifacts">
-               <content>
-                  <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER">
-                     <content>
-                        <VBox fx:id="artifactsVBox" alignment="CENTER" />
                      </content>
                   </ScrollPane>
                </content>
