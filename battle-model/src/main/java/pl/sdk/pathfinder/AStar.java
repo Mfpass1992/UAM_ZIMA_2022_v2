@@ -1,4 +1,8 @@
-package pl.sdk;
+package pl.sdk.pathfinder;
+
+import pl.sdk.Point;
+
+import java.util.ArrayList;
 
 public class AStar {
     private Point creaturePoint;

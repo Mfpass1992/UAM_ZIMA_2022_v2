@@ -45,9 +45,8 @@ public class DoubleAttackCreatureTest {
 
         CalculateDamageStrategy calc = new DefaultCalculateStrategy();
 
-        int doubleAttackCreatureDamage = calc.calculateDamage(doubleAttackCreature, normalCreature);
-        int normalCreatureDamage = calc.calculateDamage(normalCreature, doubleAttackCreature);
-        assertEquals(normalCreatureDamage*2, doubleAttackCreatureDamage);
+        doubleAttackCreature.attack(normalCreature);
+        assertEquals(50, normalCreature.getCurrentHp());
 
 
 
