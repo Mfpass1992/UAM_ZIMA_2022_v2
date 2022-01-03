@@ -1,11 +1,6 @@
 package pl.sdk;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import pl.sdk.creatures.Creature;
-import pl.sdk.creatures.NecropolisFactory;
-import pl.sdk.pathfinder.AStar;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

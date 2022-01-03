@@ -6,7 +6,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class GameEngine {
 
@@ -25,6 +27,8 @@ public class GameEngine {
     private List<Creature> creatures1;
     private List<Creature> creatures2;
 
+    private AStar aStar;
+
     public GameEngine(List<Creature> aCreatures1, List<Creature> aCreatures2) {
         this(aCreatures1, aCreatures2, new Board());
     }
@@ -39,9 +43,11 @@ public class GameEngine {
         twoSidesCreatures.addAll(aCreatures2);
         twoSidesCreatures.sort((c1, c2) -> c2.getMoveRange() - c1.getMoveRange());
         queue = new CreatureTurnQueue(twoSidesCreatures);
-
         twoSidesCreatures.forEach(queue::addObserver);
         observerSupport = new PropertyChangeSupport(this);
+
+        aStar = new AStar(board, queue);
+
     }
 
     public void addObserver(String aEventType, PropertyChangeListener aObs) {
@@ -122,6 +128,8 @@ public class GameEngine {
     }
 
     public boolean canMove(int aX, int aY) {
+        aStar.findPath(getActiveCreature(), aX, aY);
+
         return board.canMove(getActiveCreature(), aX, aY);
     }
 

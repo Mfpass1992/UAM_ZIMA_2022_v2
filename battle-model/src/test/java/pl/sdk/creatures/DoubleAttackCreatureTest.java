@@ -17,9 +17,6 @@ public class DoubleAttackCreatureTest {
     int NOT_IMPORTANT = 5;
     int MORE_THAN_SECOND_CREATURE = NOT_IMPORTANT+1;
 
-    CalculateDamageStrategy calc = new DefaultCalculateStrategy();
-
-
     @Test
     void creatureShouldAttackTwice(){
         Creature doubleAttackCreature = new Creature.BuilderForTesting()
