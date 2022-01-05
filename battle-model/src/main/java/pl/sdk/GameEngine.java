@@ -8,7 +8,6 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 public class GameEngine {
 
@@ -70,6 +69,11 @@ public class GameEngine {
         if (blockMoving) {
             return;
         }
+        Point[] points = aStar.A_star(aTargetPoint.getX(), aTargetPoint.getY());
+        System.out.println(points.length);
+        Arrays.stream(points).forEach(point -> {
+            System.out.print(point.toString() + " ");
+        });
         Point oldPosition = board.get(queue.getActiveCreature());
         board.move(queue.getActiveCreature(), aTargetPoint);
         blockMoving = true;
@@ -128,7 +132,6 @@ public class GameEngine {
     }
 
     public boolean canMove(int aX, int aY) {
-        aStar.findPath(getActiveCreature(), aX, aY);
 
         return board.canMove(getActiveCreature(), aX, aY);
     }

@@ -45,24 +45,22 @@ class Board {
         return map.keySet().stream().filter(p -> map.get(p).equals(aCreature)).findAny().get();
     }
 
-    Point[] getNeighbors(Creature aCreature){
+    Point[] getNeighbors(Point aPoint){
         int[][] dirs = {
                 {1, 0}, {0, 1}, {-1, 0}, {0, -1}};
         ArrayList<Point> result = new ArrayList<Point>();
-        Point currentPosition = get(aCreature);
 
         for(int[] dir: dirs){
-            if (0 <= (currentPosition.getX() + dir[0]) && (currentPosition.getX() + dir[0]) < BOARD_WIDTH
-                    && (0 <= (currentPosition.getY() + dir[1]) && (currentPosition.getY() + dir[1]) < BOARD_HEIGHT)){
-                Point node = new Point(currentPosition.getX() + dir[0], currentPosition.getY() + dir[1]);
+            if (0 <= (aPoint.getX() + dir[0]) && (aPoint.getX() + dir[0]) < BOARD_WIDTH
+                    && (0 <= (aPoint.getY() + dir[1]) && (aPoint.getY() + dir[1]) < BOARD_HEIGHT)){
+                Point node = new Point(aPoint.getX() + dir[0], aPoint.getY() + dir[1]);
                 if(isTileTaken(node)){
-                    Point addPoint = new Point(currentPosition.getX() + dir[0], currentPosition.getY() + dir[1], Double.MAX_VALUE);
+                    Point addPoint = new Point(aPoint.getX() + dir[0], aPoint.getY() + dir[1], Double.MAX_VALUE);
                     result.add(addPoint);
                 } else {
-                    Point addPoint = new Point(currentPosition.getX() + dir[0], currentPosition.getY() + dir[1], 10.0);
+                    Point addPoint = new Point(aPoint.getX() + dir[0], aPoint.getY() + dir[1], 10.0);
                     result.add(addPoint);
                 }
-                //result.add(node);
             }
         }
         Point arr[] = new Point[result.size()];

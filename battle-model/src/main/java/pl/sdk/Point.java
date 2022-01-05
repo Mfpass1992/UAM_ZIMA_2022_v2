@@ -47,6 +47,11 @@ public class Point {
         return Objects.hash(x, y);
     }
 
+    @Override
+    public String toString() {
+        return "{" + x + ", " + y + "}";
+    }
+
     double distance(Point aPoint) {
         return abs(aPoint.x - x) + abs((aPoint.y - y));
         //return Math.sqrt((aPoint.y - y) * (aPoint.y - y) + (aPoint.x - x) * (aPoint.x - x));

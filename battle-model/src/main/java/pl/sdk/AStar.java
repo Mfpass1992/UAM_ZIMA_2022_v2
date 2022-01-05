@@ -2,10 +2,12 @@ package pl.sdk;
 
 import pl.sdk.creatures.Creature;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.PriorityQueue;
 
 public class AStar {
-    private Creature creature;
     private final Board board;
     private final CreatureTurnQueue creatureTurnQueue;
     private HashMap<Point, Double> costMap;
@@ -16,52 +18,56 @@ public class AStar {
         this.costMap = board.getCostMap();
     }
 
-    public int getCost(Point aCreaturePoint, Point aMovePoint){
-        return 1;
-    }
-
-    public Point[] findPath(Creature aCreature, int aX, int aY) {
-        Creature activeCreature = creatureTurnQueue.getActiveCreature();
+    public Point[] A_star(int aX, int aY) {
+        Creature activeCreature =  creatureTurnQueue.getActiveCreature();
         Point startPoint = board.get(activeCreature);
         Point movePoint = new Point(aX, aY);
 
         PriorityQueue<Point> openSet = new PriorityQueue<>(new PointComparator());
         openSet.add(startPoint);
 
-        HashMap<Point, Double> gScore = new HashMap<>(); // cost so far
-        gScore.put(startPoint, (double) 0.0);
+        HashMap<Point, Point> cameFrom = new HashMap<>();
+
+        HashMap<Point, Double> gScore = new HashMap<>();
+        gScore.put(startPoint, 0.0);
 
         HashMap<Point, Double> fScore = new HashMap<>();
-
-        HashMap<Point, Point> cameFrom = new HashMap<>();
-        cameFrom.put(startPoint, null);
+        // For node n, fScore[n] := gScore[n] + h(n).
+        // fScore[n] represents our current best guess as to
+        // how short a path from start to finish can be if it goes through n.
+        // Czy to ma być od startPoint do movePoint?
+        fScore.put(startPoint, startPoint.distance(movePoint));
 
         Point current;
-        while (!openSet.isEmpty()) {
+        while (!openSet.isEmpty()){
             current = openSet.poll();
 
-            if (current.equals(movePoint)){
-                System.out.println("Path found");
+            if (current.equals(movePoint)) {
+                System.out.println("Path to " + "[" + aX + ", " + aY + "]");
                 return reconstructPath(cameFrom, current);
             }
-            Point[] neighbors = board.getNeighbors(aCreature);
 
-            for(Point next: neighbors) {
-                double tentativeGScore = gScore.get(current) + costMap.get(next);
-                if ((!gScore.containsKey(next)) || tentativeGScore < gScore.getOrDefault(next, Double.MAX_VALUE)){
-                    gScore.put(next, tentativeGScore);
-                    fScore.put(next, gScore.get(next) + next.distance(movePoint));
-                    costMap.put(next, costMap.get(next) + fScore.get(next));
-                    openSet.add(next);
-                    cameFrom.put(next, current);
+            Point[] neighbours = board.getNeighbors(current);
+
+//            openSet.remove(current);
+            for(Point neighbor : neighbours) {
+                //TODO zmienić "1" na koszt faktyczny
+                double tentativeGScore = gScore.get(current) + 1;
+                if(tentativeGScore < gScore.getOrDefault(neighbor, Double.MAX_VALUE)) {
+                    cameFrom.put(neighbor, current);
+                    gScore.put(neighbor, tentativeGScore);
+                    fScore.put(neighbor, 1 + gScore.get(neighbor));
+                    if (!openSet.contains(neighbor)) {
+                        openSet.add(neighbor);
+                    }
                 }
             }
         }
+
         return null;
     }
 
     public Point[] reconstructPath(HashMap<Point, Point> cameFrom, Point current){
-
         ArrayList<Point> totalPath = new ArrayList<>();
         totalPath.add(current);
         int l = cameFrom.keySet().size();
