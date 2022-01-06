@@ -10,7 +10,7 @@ import static pl.sdk.GameEngine.BOARD_WIDTH;
 class Board {
 
     private final Map<Point, Creature> map;
-
+    private AStar aStar = new AStar(this);
     private final static double DEFAULT_COST = 10.0;
 
     Board() {
@@ -113,9 +113,12 @@ class Board {
         if (!map.containsValue(aCreature)){
             throw new IllegalStateException("Creature isn't in board");
         }
+
+        Point[] points = aStar.findPath(aX, aY, aCreature);
+
         Point currentPosition = get(aCreature);
         double distance = currentPosition.distance(new Point(aX,aY));
-        return distance <= aCreature.getMoveRange() && !isTileTaken(new Point(aX,aY));
+        return distance <= aCreature.getMoveRange() && !isTileTaken(new Point(aX,aY)) && points.length <= aCreature.getMoveRange();
     }
 
 }

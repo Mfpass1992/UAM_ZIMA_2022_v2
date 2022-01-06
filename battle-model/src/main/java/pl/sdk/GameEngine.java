@@ -26,7 +26,6 @@ public class GameEngine {
     private List<Creature> creatures1;
     private List<Creature> creatures2;
 
-    private AStar aStar;
 
     public GameEngine(List<Creature> aCreatures1, List<Creature> aCreatures2) {
         this(aCreatures1, aCreatures2, new Board());
@@ -44,9 +43,6 @@ public class GameEngine {
         queue = new CreatureTurnQueue(twoSidesCreatures);
         twoSidesCreatures.forEach(queue::addObserver);
         observerSupport = new PropertyChangeSupport(this);
-
-        aStar = new AStar(board, queue);
-
     }
 
     public void addObserver(String aEventType, PropertyChangeListener aObs) {
@@ -69,7 +65,6 @@ public class GameEngine {
         if (blockMoving) {
             return;
         }
-
 
         Point oldPosition = board.get(queue.getActiveCreature());
         board.move(queue.getActiveCreature(), aTargetPoint);
@@ -103,7 +98,6 @@ public class GameEngine {
             }
         }
 
-
         blockAttacking = true;
         blockMoving = true;
         notifyObservers(new PropertyChangeEvent(this, CREATURE_ATTACKED, null, null));
@@ -129,12 +123,7 @@ public class GameEngine {
     }
 
     public boolean canMove(int aX, int aY) {
-        Point[] points = aStar.A_star(aX, aY);
-//        System.out.println(points.length);
-//        Arrays.stream(points).forEach(point -> {
-//            System.out.print(point.toString() + " ");
-//        });
-        return board.canMove(getActiveCreature(), aX, aY) && points.length <= getActiveCreature().getMoveRange();
+        return board.canMove(getActiveCreature(), aX, aY);
     }
 
     public boolean canAttack(int aX, int aY) {
