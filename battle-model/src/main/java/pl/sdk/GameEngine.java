@@ -69,11 +69,8 @@ public class GameEngine {
         if (blockMoving) {
             return;
         }
-        Point[] points = aStar.A_star(aTargetPoint.getX(), aTargetPoint.getY());
-        System.out.println(points.length);
-        Arrays.stream(points).forEach(point -> {
-            System.out.print(point.toString() + " ");
-        });
+
+
         Point oldPosition = board.get(queue.getActiveCreature());
         board.move(queue.getActiveCreature(), aTargetPoint);
         blockMoving = true;
@@ -132,8 +129,12 @@ public class GameEngine {
     }
 
     public boolean canMove(int aX, int aY) {
-
-        return board.canMove(getActiveCreature(), aX, aY);
+        Point[] points = aStar.A_star(aX, aY);
+//        System.out.println(points.length);
+//        Arrays.stream(points).forEach(point -> {
+//            System.out.print(point.toString() + " ");
+//        });
+        return board.canMove(getActiveCreature(), aX, aY) && points.length <= getActiveCreature().getMoveRange();
     }
 
     public boolean canAttack(int aX, int aY) {

@@ -11,6 +11,8 @@ class Board {
 
     private final Map<Point, Creature> map;
 
+    private final static double DEFAULT_COST = 10.0;
+
     Board() {
         map = new HashMap<>();
     }
@@ -67,23 +69,31 @@ class Board {
         return result.toArray(arr);
     }
 
-    HashMap<Point, Double> getCostMap(){
-        HashMap<Point, Double> result = new HashMap<>();
-
-        for(int height = 0; height < BOARD_HEIGHT; height++){
-            for(int width = 0; width < BOARD_WIDTH; width++) {
-                Point current = new Point(width, height);
-                if(isTileTaken(current)){
-                    Point addPoint = new Point(width, height, Double.MAX_VALUE);
-                    result.put(addPoint, addPoint.getCost());
-                } else {
-                    Point addPoint = new Point(width, height, 10.0);
-                    result.put(addPoint, addPoint.getCost());
-                }
-            }
+    Point getCurrentPointCost(Point aPoint) {
+        if(isTileTaken(aPoint)) {
+            return new Point(aPoint.getX(), aPoint.getY(), Double.MAX_VALUE);
+        } else {
+            return new Point(aPoint.getX(), aPoint.getY(), DEFAULT_COST);
         }
-        return result;
     }
+
+//    HashMap<Point, Double> getCostMap(){
+//        HashMap<Point, Double> result = new HashMap<>();
+//
+//        for(int height = 0; height < BOARD_HEIGHT; height++){
+//            for(int width = 0; width < BOARD_WIDTH; width++) {
+//                Point current = new Point(width, height);
+//                if(isTileTaken(current)){
+//                    Point addPoint = new Point(width, height, Double.MAX_VALUE);
+//                    result.put(addPoint, addPoint.getCost());
+//                } else {
+//                    Point addPoint = new Point(width, height, 10.0);
+//                    result.put(addPoint, addPoint.getCost());
+//                }
+//            }
+//        }
+//        return result;
+//    }
 
     void move(Creature aCreature, Point aTargetPoint1){
         move(get(aCreature), aTargetPoint1);
