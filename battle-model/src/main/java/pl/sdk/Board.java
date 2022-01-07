@@ -10,7 +10,7 @@ import static pl.sdk.GameEngine.BOARD_WIDTH;
 class Board {
 
     private final Map<Point, Creature> map;
-    private AStar aStar = new AStar(this);
+    private final AStar aStar = new AStar(this);
     private final static double DEFAULT_COST = 10.0;
 
     Board() {
@@ -50,7 +50,7 @@ class Board {
     Point[] getNeighbors(Point aPoint){
         int[][] dirs = {
                 {1, 0}, {0, 1}, {-1, 0}, {0, -1}};
-        ArrayList<Point> result = new ArrayList<Point>();
+        ArrayList<Point> result = new ArrayList<>();
 
         for(int[] dir: dirs){
             if (0 <= (aPoint.getX() + dir[0]) && (aPoint.getX() + dir[0]) < BOARD_WIDTH
@@ -65,7 +65,7 @@ class Board {
                 }
             }
         }
-        Point arr[] = new Point[result.size()];
+        Point[] arr = new Point[result.size()];
         return result.toArray(arr);
     }
 
@@ -76,24 +76,6 @@ class Board {
             return new Point(aPoint.getX(), aPoint.getY(), DEFAULT_COST);
         }
     }
-
-//    HashMap<Point, Double> getCostMap(){
-//        HashMap<Point, Double> result = new HashMap<>();
-//
-//        for(int height = 0; height < BOARD_HEIGHT; height++){
-//            for(int width = 0; width < BOARD_WIDTH; width++) {
-//                Point current = new Point(width, height);
-//                if(isTileTaken(current)){
-//                    Point addPoint = new Point(width, height, Double.MAX_VALUE);
-//                    result.put(addPoint, addPoint.getCost());
-//                } else {
-//                    Point addPoint = new Point(width, height, 10.0);
-//                    result.put(addPoint, addPoint.getCost());
-//                }
-//            }
-//        }
-//        return result;
-//    }
 
     void move(Creature aCreature, Point aTargetPoint1){
         move(get(aCreature), aTargetPoint1);
@@ -117,7 +99,7 @@ class Board {
         Point[] points = aStar.findPath(aX, aY, aCreature);
         double distance = currentPosition.distance(new Point(aX,aY));
 
-        return distance <= aCreature.getMoveRange() && !isTileTaken(new Point(aX,aY)) && points.length - 1 <= aCreature.getMoveRange();
+        return distance <= aCreature.getMoveRange() && !isTileTaken(new Point(aX,aY)) && points.length <= aCreature.getMoveRange();
     }
 
 }

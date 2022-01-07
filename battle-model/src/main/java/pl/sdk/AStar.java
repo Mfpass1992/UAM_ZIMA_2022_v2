@@ -28,19 +28,14 @@ public class AStar {
 
         HashMap<Point, Double> fScore = new HashMap<>();
 
-        // For node n, fScore[n] := gScore[n] + h(n).
-        // fScore[n] represents our current best guess as to
-        // how short a path from start to finish can be if it goes through n.
         fScore.put(startPoint, startPoint.distance(movePoint));
 
         Point current;
         while (!openList.isEmpty()) {
-            Point minKey = getMinKey(fScore, openList);
-            current = minKey;
+            current = getMinKey(fScore, openList);
             openList.remove(current);
             closedList.add(current);
             if (current.equals(movePoint)) {
-//                System.out.println("Path to " + "[" + aX + ", " + aY + "]");
                 return reconstructPath(cameFrom, current);
             }
 
@@ -52,7 +47,6 @@ public class AStar {
                 neighbours.add(toAdd);
             }
 
-//            openSet.remove(current);
             for(Point neighbor : neighbours) {
                 if (closedList.contains(neighbor)) {
                     continue;
@@ -63,7 +57,6 @@ public class AStar {
                 if(!openList.contains(neighbor) || tentativeGScore < gScore.getOrDefault(neighbor, Double.MAX_VALUE)) {
                     cameFrom.put(neighbor, current);
                     gScore.put(neighbor, tentativeGScore);
-//                    fScore.put(neighbor, neighbor.getCost() + gScore.get(neighbor));
                     fScore.put(neighbor, neighbor.getCost() + neighbor.distance(movePoint));
                     if (!openList.contains(neighbor)) {
                         openList.add(neighbor);
@@ -84,6 +77,9 @@ public class AStar {
             totalPath.add(current);
         }
 
+        int startPointIndex = totalPath.size() - 1;
+        totalPath.remove(startPointIndex);
+
         Point[] arr = new Point[totalPath.size()];
         return totalPath.toArray(arr);
     }
@@ -100,18 +96,4 @@ public class AStar {
         }
         return minKey;
     }
-//    public Point[] reconstructPath(HashMap<Point, Point> cameFrom, Point current){
-//        ArrayList<Point> totalPath = new ArrayList<>();
-//        totalPath.add(current);
-//        int l = cameFrom.keySet().size();
-//        for(int i=0; i < l; i++){
-//            current = cameFrom.get(current);
-//            if (current != null){
-//                totalPath.add(0, current);
-//            }
-//        }
-//
-//        Point[] arr = new Point[totalPath.size()];
-//        return totalPath.toArray(arr);
-//    }
 }
