@@ -2,9 +2,7 @@ package pl.sdk;
 
 import pl.sdk.creatures.Creature;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class AStar {
     private final Board board;
@@ -18,10 +16,10 @@ public class AStar {
         Point startPoint = new Point(creaturePoint.getX(), creaturePoint.getY(), 0.0);
         Point movePoint = board.getCurrentPointCost(new Point(aX, aY));
 
-        PriorityQueue<Point> openSet = new PriorityQueue<>(new PointComparator());
-        openSet.add(startPoint);
+        LinkedList<Point> openList = new LinkedList<>();
+        openList.add(startPoint);
 
-        PriorityQueue<Point> closedSet = new PriorityQueue<>(new PointComparator());
+        LinkedList<Point> closedList = new LinkedList<>();
 
         HashMap<Point, Point> cameFrom = new HashMap<>();
 
@@ -36,9 +34,11 @@ public class AStar {
         fScore.put(startPoint, startPoint.distance(movePoint));
 
         Point current;
-        while (!openSet.isEmpty()){
-            current = openSet.poll();
-            closedSet.add(current);
+        while (!openList.isEmpty()) {
+            Point minKey = getMinKey(fScore, openList);
+            current = minKey;
+            openList.remove(current);
+            closedList.add(current);
             if (current.equals(movePoint)) {
 //                System.out.println("Path to " + "[" + aX + ", " + aY + "]");
                 return reconstructPath(cameFrom, current);
@@ -54,18 +54,19 @@ public class AStar {
 
 //            openSet.remove(current);
             for(Point neighbor : neighbours) {
-                if (closedSet.contains(neighbor)) {
+                if (closedList.contains(neighbor)) {
                     continue;
                 }
 
                 double tentativeGScore = gScore.get(current) + neighbor.getCost();
 
-                if(!openSet.contains(neighbor) || tentativeGScore < gScore.getOrDefault(neighbor, Double.MAX_VALUE)) {
+                if(!openList.contains(neighbor) || tentativeGScore < gScore.getOrDefault(neighbor, Double.MAX_VALUE)) {
                     cameFrom.put(neighbor, current);
                     gScore.put(neighbor, tentativeGScore);
-                    fScore.put(neighbor, neighbor.getCost() + gScore.get(neighbor));
-                    if (!openSet.contains(neighbor)) {
-                        openSet.add(neighbor);
+//                    fScore.put(neighbor, neighbor.getCost() + gScore.get(neighbor));
+                    fScore.put(neighbor, neighbor.getCost() + neighbor.distance(movePoint));
+                    if (!openList.contains(neighbor)) {
+                        openList.add(neighbor);
                     }
                 }
             }
@@ -85,6 +86,19 @@ public class AStar {
 
         Point[] arr = new Point[totalPath.size()];
         return totalPath.toArray(arr);
+    }
+
+    private Point getMinKey(Map<Point, Double> fScore, LinkedList<Point> openlist) {
+        Point minKey = null;
+        double minValue = Integer.MAX_VALUE;
+        for (Point key : openlist) {
+            double value = fScore.getOrDefault(key, (double) Integer.MAX_VALUE);
+            if (value < minValue) {
+                minValue = value;
+                minKey = key;
+            }
+        }
+        return minKey;
     }
 //    public Point[] reconstructPath(HashMap<Point, Point> cameFrom, Point current){
 //        ArrayList<Point> totalPath = new ArrayList<>();

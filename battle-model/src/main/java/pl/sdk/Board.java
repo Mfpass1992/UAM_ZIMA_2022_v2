@@ -113,12 +113,11 @@ class Board {
         if (!map.containsValue(aCreature)){
             throw new IllegalStateException("Creature isn't in board");
         }
-
-        Point[] points = aStar.findPath(aX, aY, aCreature);
-
         Point currentPosition = get(aCreature);
+        Point[] points = aStar.findPath(aX, aY, aCreature);
         double distance = currentPosition.distance(new Point(aX,aY));
-        return distance <= aCreature.getMoveRange() && !isTileTaken(new Point(aX,aY)) && points.length <= aCreature.getMoveRange();
+
+        return distance <= aCreature.getMoveRange() && !isTileTaken(new Point(aX,aY)) && points.length - 1 <= aCreature.getMoveRange();
     }
 
 }
