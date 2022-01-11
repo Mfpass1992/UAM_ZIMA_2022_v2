@@ -48,28 +48,32 @@ class Board {
     }
 
     Point[] getNeighbors(Point aPoint){
-        int[][] dirs = {
-                {1, 0}, {0, 1}, {-1, 0}, {0, -1}};
+        int[][] dirs = {{1, 0}, {0, 1},
+                        {-1, 0}, {0, -1}};
         ArrayList<Point> result = new ArrayList<>();
 
         for(int[] dir: dirs){
             if (0 <= (aPoint.getX() + dir[0]) && (aPoint.getX() + dir[0]) < BOARD_WIDTH
                     && (0 <= (aPoint.getY() + dir[1]) && (aPoint.getY() + dir[1]) < BOARD_HEIGHT)){
-                Point node = new Point(aPoint.getX() + dir[0], aPoint.getY() + dir[1]);
-                if(isTileTaken(node)){
-                    Point addPoint = new Point(aPoint.getX() + dir[0], aPoint.getY() + dir[1], Double.MAX_VALUE);
-                    result.add(addPoint);
-                } else {
-                    Point addPoint = new Point(aPoint.getX() + dir[0], aPoint.getY() + dir[1], 10.0);
-                    result.add(addPoint);
-                }
+
+                Point node = returnPointWithCost(aPoint.getX() + dir[0], aPoint.getY() + dir[1]);
+                result.add(node);
             }
         }
         Point[] arr = new Point[result.size()];
         return result.toArray(arr);
     }
 
-    public Point[] getNeighborsForFlying(Point aPoint) {
+    Point returnPointWithCost(int aX, int aY) {
+        Point node = new Point(aX, aY);
+        if(isTileTaken(node)){
+            return new Point(aX, aY, Double.MAX_VALUE);
+        } else {
+            return new Point(aX, aY, DEFAULT_COST);
+        }
+    }
+
+    Point[] getNeighborsForFlying(Point aPoint) {
         return null;
     }
 
