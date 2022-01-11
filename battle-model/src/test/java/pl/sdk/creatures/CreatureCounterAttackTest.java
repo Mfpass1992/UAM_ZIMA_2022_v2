@@ -8,6 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class CreatureCounterAttackTest {
 
     private static final int NOT_IMPORTANT = 5;
+    final static float NO_HAND_TO_HAND_PENALTY = 1.0F;
+    final static float HAND_TO_HAND_PENALTY = 0.5F;
 
     @Test
     void creatureShouldCounterAttack(){
@@ -28,7 +30,7 @@ class CreatureCounterAttackTest {
                 .damage(Range.closed(10,10))
                 .build();
 
-        attacker.attack(defender);
+        attacker.attack(defender, NO_HAND_TO_HAND_PENALTY);
 
         assertEquals(90,attacker.getCurrentHp());
     }
@@ -60,8 +62,8 @@ class CreatureCounterAttackTest {
                 .damage(Range.closed(10,10))
                 .build();
 
-        attacker.attack(defender);
-        attacker2.attack(defender);
+        attacker.attack(defender, NO_HAND_TO_HAND_PENALTY);
+        attacker2.attack(defender, NO_HAND_TO_HAND_PENALTY);
 
         assertEquals(90,attacker.getCurrentHp());
         assertEquals(100,attacker2.getCurrentHp());

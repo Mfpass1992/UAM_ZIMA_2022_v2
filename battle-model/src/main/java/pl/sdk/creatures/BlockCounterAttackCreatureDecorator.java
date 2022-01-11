@@ -12,9 +12,10 @@ class BlockCounterAttackCreatureDecorator extends AbstractCreatureDecorator{
     }
 
     @Override
-    public void attack(Creature aDefender) {
+    public void attack(Creature aDefender, float modifier) {
         if (getDecorated().isAlive()){
-            int damageToDeal = getDecorated().calculateDamage(this,aDefender);
+            int damageToDeal = (int) (getDecorated().calculateDamage(this,aDefender) * modifier);
+            System.out.println(damageToDeal);
             aDefender.applyDamage(damageToDeal);
         }
     }

@@ -7,11 +7,11 @@ public class DoubleAttackCreatureDecorator extends AbstractCreatureDecorator {
     }
 
     @Override
-    public void attack(Creature aDefender) {
+    public void attack(Creature aDefender, float modifier) {
         if (isAlive()){
             int damageToDeal = calculateDamage(this, aDefender);
             damageToDeal += calculateDamage(this, aDefender);
-            aDefender.applyDamage(damageToDeal);
+            aDefender.applyDamage((int) (damageToDeal * modifier));
             counterAttack(aDefender);
         }
     }

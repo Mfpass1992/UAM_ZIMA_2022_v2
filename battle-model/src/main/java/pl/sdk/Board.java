@@ -69,6 +69,10 @@ class Board {
         return result.toArray(arr);
     }
 
+    public Point[] getNeighborsForFlying(Point aPoint) {
+        return null;
+    }
+
     Point getCurrentPointCost(Point aPoint) {
         if(isTileTaken(aPoint)) {
             return new Point(aPoint.getX(), aPoint.getY(), Double.MAX_VALUE);
@@ -101,5 +105,4 @@ class Board {
 
         return distance <= aCreature.getMoveRange() && !isTileTaken(new Point(aX,aY)) && points.length <= aCreature.getMoveRange();
     }
-
 }

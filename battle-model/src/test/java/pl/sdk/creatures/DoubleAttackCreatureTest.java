@@ -16,6 +16,8 @@ public class DoubleAttackCreatureTest {
 
     int NOT_IMPORTANT = 5;
     int MORE_THAN_SECOND_CREATURE = NOT_IMPORTANT+1;
+    final static float NO_HAND_TO_HAND_PENALTY = 1.0F;
+    final static float HAND_TO_HAND_PENALTY = 0.5F;
 
     @Test
     void creatureShouldAttackTwice(){
@@ -42,7 +44,7 @@ public class DoubleAttackCreatureTest {
 
         CalculateDamageStrategy calc = new DefaultCalculateStrategy();
 
-        doubleAttackCreature.attack(normalCreature);
+        doubleAttackCreature.attack(normalCreature, NO_HAND_TO_HAND_PENALTY);
         assertEquals(50, normalCreature.getCurrentHp());
 
 

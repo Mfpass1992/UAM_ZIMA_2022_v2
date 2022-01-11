@@ -16,6 +16,8 @@ public class AStar {
         Point startPoint = new Point(creaturePoint.getX(), creaturePoint.getY(), 0.0);
         Point movePoint = board.getCurrentPointCost(new Point(aX, aY));
 
+        Point[] neighboursCostless;
+
         LinkedList<Point> openList = new LinkedList<>();
         openList.add(startPoint);
 
@@ -39,7 +41,13 @@ public class AStar {
                 return reconstructPath(cameFrom, current);
             }
 
-            Point[] neighboursCostless = board.getNeighbors(current);
+            if (aCreature.isFlying()){
+//                neighboursCostless = board.getNeighborsForFlying(current);
+                neighboursCostless = board.getNeighbors(current);
+
+            } else {
+                neighboursCostless = board.getNeighbors(current);
+            }
 
             ArrayList<Point> neighbours = new ArrayList<>();
             for(Point neighbor : neighboursCostless) {
