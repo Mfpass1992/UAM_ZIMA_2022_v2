@@ -8,15 +8,14 @@ import java.util.List;
 
 public class EconomyHero {
 
-    public enum Fraction {
-        NECROPOLIS;
-    }
-    private final Fraction fraction;
+    private HeroStatistic heroStatistic;
 
+    // private List<EconomyArtifact> artifactsList;
+    // private List<Spell> spellList;
     private final List<EconomyCreature> creatureList;
     private int gold;
-    public EconomyHero(Fraction aFraction, int aGold) {
-        fraction = aFraction;
+    public EconomyHero(HeroStatistic aHeroStatistics, int aGold) {
+        heroStatistic = aHeroStatistics;
         gold = aGold;
         creatureList = new ArrayList<>();
     }
@@ -46,4 +45,22 @@ public class EconomyHero {
         }
         gold -= aAmount;
     }
+
+    public String getHeroFraction(){ return heroStatistic.getHeroFraction(); }
+
+    public String getHeroName(){ return heroStatistic.getHeroName(); }
+
+    public int getHeroAttack(){ return heroStatistic.getHeroAttack(); }
+
+    public int getHeroDefense(){ return heroStatistic.getHeroDefense(); }
+
+    public int getHeroSpellPower(){ return heroStatistic.getSpellPower(); }
+
+    public int getHeroKnowledge() {
+        return heroStatistic.getHeroKnowledge();
+    }
+
+    public int getHeroMorale() { return heroStatistic.getHeroMorale(); }
+
+    public int getHeroLuck() { return heroStatistic.getHeroLuck(); }
 }

@@ -8,30 +8,40 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class EconomyHeroTest {
 
-
-    private EconomyHero hero;
+    private EconomyHeroFactory economyHeroFactory;
+    private EconomyHero economyHero;
 
     @BeforeEach
     void init(){
-        hero = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 3000);
+        economyHeroFactory = new EconomyHeroFactory();
+        economyHero = economyHeroFactory.create("Clavius", 1000);
+    }
+    @Test
+    void heroShouldHave1AttackAnd2Defense(){
+        assertEquals(economyHero.getHeroAttack(),1);
+        assertEquals(economyHero.getHeroDefense(),2);
+    }
+    @Test
+    void fractionOfHeroShouldBeNecropolis(){
+        assertEquals(economyHero.getHeroFraction(), "NECROPOLIS");
     }
 
     @Test
     void shouldThrowExceptionWhileHeroHas7CreatureAndYoTryToAddNextOne(){
         EconomyNecropolisFactory factory = new EconomyNecropolisFactory();
-        hero.addCreature(factory.create(true,1,1));
-        hero.addCreature(factory.create(true,1,1));
-        hero.addCreature(factory.create(true,1,1));
-        hero.addCreature(factory.create(true,1,1));
-        hero.addCreature(factory.create(true,1,1));
-        hero.addCreature(factory.create(true,1,1));
-        hero.addCreature(factory.create(true,1,1));
+        economyHero.addCreature(factory.create(true,1,1));
+        economyHero.addCreature(factory.create(true,1,1));
+        economyHero.addCreature(factory.create(true,1,1));
+        economyHero.addCreature(factory.create(true,1,1));
+        economyHero.addCreature(factory.create(true,1,1));
+        economyHero.addCreature(factory.create(true,1,1));
+        economyHero.addCreature(factory.create(true,1,1));
 
-        assertThrows(IllegalStateException.class, () -> hero.addCreature(factory.create(true,1,1)));
+        assertThrows(IllegalStateException.class, () -> economyHero.addCreature(factory.create(true,1,1)));
     }
 
     @Test
     void shouldThrowExceptionWhileYouTrySubstractMoreGoldThanHeroHas(){
-        assertThrows(IllegalStateException.class, () -> hero.substractGold(3001));
+        assertThrows(IllegalStateException.class, () -> economyHero.substractGold(3001));
     }
 }
