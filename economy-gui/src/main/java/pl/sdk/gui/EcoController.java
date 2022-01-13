@@ -42,7 +42,7 @@ public class EcoController implements PropertyChangeListener
 
     @FXML void initialize() throws Exception
     {
-        readyButton.setOnMouseClicked( (e) -> { economyEngine.pass(); } );
+        readyButton.setOnMouseClicked( (e) -> economyEngine.pass() );
         readyButton.setDisable( true );
 
         refreshHeroPane( 1 );

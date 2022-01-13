@@ -14,20 +14,20 @@ public class EconomyStart extends Application
     @Override
     public void start( Stage aStage ) throws Exception
     {
-        /* TODO : uncomment before committing
-        List< EconomyHero > heroes = (new PickFractionAndHeroDialog(
+        // TODO : remove after testing
+        List< EconomyHero > heroes;
+        if( false ) heroes = ( new PickFractionAndHeroDialog(
             20000
-            )).showDialog();
-        */
-        List< EconomyHero > heroes = List.of(
+        ) ).showDialog();
+        else heroes = List.of(
             new EconomyHero( EconomyHero.Fraction.NECROPOLIS, 20000 ),
             new EconomyHero( EconomyHero.Fraction.NECROPOLIS, 20000 )
-            );
+        );
 
-        loadNewEconomy( aStage, heroes );
+        loadEconomy( aStage, heroes );
     }
 
-    private void loadNewEconomy( Stage aStage, List<EconomyHero> heroes ) throws Exception
+    private void loadEconomy( Stage aStage, List<EconomyHero> heroes ) throws Exception
     {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(
