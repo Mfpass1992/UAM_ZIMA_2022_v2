@@ -43,10 +43,9 @@ public class AStar {
 
             if (aCreature.isFlying()){
 //                neighboursCostless = board.getNeighborsForFlying(current);
-                neighboursCostless = board.getNeighbors(current);
-
+                neighboursCostless = board.getNeighborsForWalkingCreature(current);
             } else {
-                neighboursCostless = board.getNeighbors(current);
+                neighboursCostless = board.getNeighborsForWalkingCreature(current);
             }
 
             ArrayList<Point> neighbours = new ArrayList<>();

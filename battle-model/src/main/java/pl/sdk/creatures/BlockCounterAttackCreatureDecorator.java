@@ -15,7 +15,6 @@ class BlockCounterAttackCreatureDecorator extends AbstractCreatureDecorator{
     public void attack(Creature aDefender, float modifier) {
         if (getDecorated().isAlive()){
             int damageToDeal = (int) (getDecorated().calculateDamage(this,aDefender) * modifier);
-            System.out.println(damageToDeal);
             aDefender.applyDamage(damageToDeal);
         }
     }

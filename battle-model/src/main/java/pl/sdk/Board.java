@@ -47,7 +47,7 @@ class Board {
         return map.keySet().stream().filter(p -> map.get(p).equals(aCreature)).findAny().get();
     }
 
-    Point[] getNeighbors(Point aPoint){
+    Point[] getNeighborsForWalkingCreature(Point aPoint){
         int[][] dirs = {{1, 0}, {0, 1},
                         {-1, 0}, {0, -1}};
         ArrayList<Point> result = new ArrayList<>();
@@ -73,7 +73,7 @@ class Board {
         }
     }
 
-    Point[] getNeighborsForFlying(Point aPoint) {
+    Point[] getNeighborsForFlyingCreature(Point aPoint) {
         return null;
     }
 
