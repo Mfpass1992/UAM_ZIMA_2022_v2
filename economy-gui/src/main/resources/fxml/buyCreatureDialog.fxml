@@ -14,7 +14,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox alignment="CENTER" spacing="10.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label fx:id="dialogTitleLabel" contentDisplay="CENTER" text="Recruit Creature Name" textAlignment="CENTER">
@@ -112,9 +111,9 @@
       <Slider fx:id="slider" majorTickUnit="1.0" minorTickCount="10" snapToTicks="true" />
       <HBox spacing="10.0">
          <children>
-            <Button fx:id="cancelButton" mnemonicParsing="false" prefWidth="100.0" text="CANCEL" />
             <Button fx:id="takeAllButton" mnemonicParsing="false" prefWidth="100.0" text="TAKE ALL" />
             <Button fx:id="confirmButton" mnemonicParsing="false" prefWidth="100.0" text="CONFIRM" />
+            <Button fx:id="cancelButton" mnemonicParsing="false" prefWidth="100.0" text="CANCEL" />
          </children>
       </HBox>
    </children>
