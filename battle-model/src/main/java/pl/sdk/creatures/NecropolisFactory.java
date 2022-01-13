@@ -1,9 +1,19 @@
 package pl.sdk.creatures;
 
+import static pl.sdk.creatures.CreatureStatisticModifier.sumOfStatistics;
 
 public class NecropolisFactory {
 
     private static final String EXCEPTION_MESSAGE = "We support tiers from 1 to 7";
+    private CreatureStatisticModifier statisticModifier;
+
+    public NecropolisFactory() {
+        statisticModifier = new CreatureStatisticModifier.Builder().build();
+    }
+
+    public void addModifier(CreatureStatisticIf aModifier) {
+        statisticModifier = sumOfStatistics(statisticModifier, aModifier);
+    }
 
     public static Creature createDefaultForTests() {
         return new Creature.Builder()
@@ -16,38 +26,38 @@ public class NecropolisFactory {
             switch (aTier) {
                 case 1:
                     return new Creature.Builder()
-                            .statistic(CreatureStatistic.SKELETON)
+                            .statistic(statisticModifier.apply(CreatureStatistic.SKELETON))
                             .amount(aAmount)
                             .build();
                 case 2:
                     return new Creature.Builder()
-                            .statistic(CreatureStatistic.WALKING_DEAD)
+                            .statistic(statisticModifier.apply(CreatureStatistic.WALKING_DEAD))
                             .amount(aAmount)
                             .build();
                 case 3:
                     return new Creature.Builder()
-                            .statistic(CreatureStatistic.WIGHT)
+                            .statistic(statisticModifier.apply(CreatureStatistic.WIGHT))
                             .amount(aAmount)
                             .build();
                 case 4:
                     return new Creature.Builder()
-                            .statistic(CreatureStatistic.VAMPIRE)
+                            .statistic(statisticModifier.apply(CreatureStatistic.VAMPIRE))
                             .amount(aAmount)
                             .build();
                 case 5:
                     Creature lich = new Creature.Builder()
-                            .statistic(CreatureStatistic.LICH)
+                            .statistic(statisticModifier.apply(CreatureStatistic.LICH))
                             .amount(aAmount)
                             .build();
                     return new BlockCounterAttackCreatureDecorator(new ShootingCreatureDecorator(new SplashDamageCreatureDecorator(lich, getSplashForLich())));
                 case 6:
                     return new Creature.Builder()
-                            .statistic(CreatureStatistic.BLACK_KNIGHT)
+                            .statistic(statisticModifier.apply(CreatureStatistic.BLACK_KNIGHT))
                             .amount(aAmount)
                             .build();
                 case 7:
                     return new Creature.Builder()
-                            .statistic(CreatureStatistic.BONE_DRAGON)
+                            .statistic(statisticModifier.apply(CreatureStatistic.BONE_DRAGON))
                             .amount(aAmount)
                             .build();
                 default:
@@ -57,39 +67,39 @@ public class NecropolisFactory {
             switch (aTier) {
                 case 1:
                     return new Creature.Builder()
-                            .statistic(CreatureStatistic.SKELETON_WARRIOR)
+                            .statistic(statisticModifier.apply(CreatureStatistic.SKELETON_WARRIOR))
                             .amount(aAmount)
                             .build();
                 case 2:
                     return new Creature.Builder()
-                            .statistic(CreatureStatistic.ZOMBIE)
+                            .statistic(statisticModifier.apply(CreatureStatistic.ZOMBIE))
                             .amount(aAmount)
                             .build();
                 case 3:
                     return new RegenerationOnEndOfTurnCreatureDecorator(new Creature.Builder()
-                            .statistic(CreatureStatistic.WRAITH)
+                            .statistic(statisticModifier.apply(CreatureStatistic.WRAITH))
                             .amount(aAmount)
                             .build());
                 case 4:
                     return new Creature.Builder()
-                            .statistic(CreatureStatistic.VAMPIRE_LORD)
+                            .statistic(statisticModifier.apply(CreatureStatistic.VAMPIRE_LORD))
                             .amount(aAmount)
                             .build();
                 case 5:
                     Creature c = new Creature.Builder()
-                            .statistic(CreatureStatistic.POWER_LICH)
+                            .statistic(statisticModifier.apply(CreatureStatistic.POWER_LICH))
                             .amount(aAmount)
                             .build();
                     boolean[][] splashDamageTable = getSplashForLich();
                     return new SplashDamageCreatureDecorator(new BlockCounterAttackCreatureDecorator(new ShootingCreatureDecorator(c)), splashDamageTable);
                 case 6:
                     return new Creature.Builder()
-                            .statistic(CreatureStatistic.DREAD_KNIGHT)
+                            .statistic(statisticModifier.apply(CreatureStatistic.DREAD_KNIGHT))
                             .amount(aAmount)
                             .build();
                 case 7:
                     return new Creature.Builder()
-                            .statistic(CreatureStatistic.GHOST_DRAGON)
+                            .statistic(statisticModifier.apply(CreatureStatistic.GHOST_DRAGON))
                             .amount(aAmount)
                             .build();
                 default:
