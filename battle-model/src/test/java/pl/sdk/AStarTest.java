@@ -23,14 +23,6 @@ public class AStarTest {
         board.add(new Point(0,1), creature);
     }
 
-//    @Test
-//    void astarSampleTest(){
-//        Point creaturePoint = board.get(creature);
-//        Point movePoint = new Point(0,1);
-//        astar = new AStar(board);
-//        assertEquals(astar.getCost(creaturePoint, movePoint), 1);
-//    }
-
     @Test
     void creatureShouldMoveCorretly(){
         Point movePoint = new Point(0,3);
