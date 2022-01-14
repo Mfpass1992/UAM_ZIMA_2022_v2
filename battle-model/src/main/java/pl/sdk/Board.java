@@ -73,7 +73,7 @@ class Board {
         }
     }
 
-    Point[] getNeighborsForFlying(Point aPoint) {
+    Point[] getNeighborsForFlyingCreature(Point aPoint) {
         return null;
     }
 
