@@ -36,11 +36,14 @@ public class EconomyHero {
         gold += aAmount;
     }
 
+    public Fraction getFraction() { return fraction; }
+
     public List<EconomyCreature> getCreatures() {
         return List.copyOf(creatureList);
     }
 
-    void substractGold(int aAmount){
+
+    void subtractGold( int aAmount){
         if (aAmount > gold){
             throw new IllegalStateException("Hero has not enought money");
         }

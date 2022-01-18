@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="60.0" prefWidth="60.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="creatureImage" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../creatures/missing_creature_image.png" />
+         </image>
+      </ImageView>
+      <HBox alignment="TOP_RIGHT" StackPane.alignment="BOTTOM_RIGHT">
+         <children>
+            <Label fx:id="creatureAmountLabel" text="0" textAlignment="RIGHT" />
+         </children>
+      </HBox>
+   </children>
+</StackPane>
