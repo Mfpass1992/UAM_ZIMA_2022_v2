@@ -6,8 +6,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import pl.sdk.*;
-import pl.sdk.creatures.Creature;
-import pl.sdk.creatures.NecropolisFactory;
+import pl.sdk.creatures.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -27,13 +26,15 @@ public class BattleMapController implements PropertyChangeListener {
     public BattleMapController() {
         List<Creature> notUpgradedCreatures = new ArrayList<>();
         List<Creature> upgradedCreatures = new ArrayList<>();
-        NecropolisFactory factory = new NecropolisFactory();
+        FractionFactory fractionFactory = new FractionFactory();
+        AbstractCreatureFactory castleFactory = fractionFactory.getInstance(Fractions.CASTLE);
+
         for (int i = 1; i <= 7; i++) {
-            notUpgradedCreatures.add(factory.create(false, i, 10));
+            notUpgradedCreatures.add(castleFactory.create(false, i, 10));
         }
 
         for (int i = 1; i <= 7; i++) {
-            upgradedCreatures.add(factory.create(true, i, 10));
+            upgradedCreatures.add(castleFactory.create(true, i, 10));
         }
 
         gameEngine = new GameEngine(notUpgradedCreatures, upgradedCreatures);

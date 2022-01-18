@@ -19,4 +19,6 @@ public interface CreatureStatisticIf {
     int getTier();
 
     String getDescription();
+
+    boolean isFlying();
 }

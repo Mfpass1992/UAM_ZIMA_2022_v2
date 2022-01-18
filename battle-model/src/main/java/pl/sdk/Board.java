@@ -10,6 +10,8 @@ import static pl.sdk.GameEngine.BOARD_WIDTH;
 class Board {
 
     private final Map<Point, Creature> map;
+    private final AStar aStar = new AStar(this);
+    private final static double DEFAULT_COST = 10.0;
 
     Board() {
         map = new HashMap<>();
@@ -45,6 +47,44 @@ class Board {
         return map.keySet().stream().filter(p -> map.get(p).equals(aCreature)).findAny().get();
     }
 
+    Point[] getNeighborsForWalkingCreature(Point aPoint){
+        int[][] dirs = {{1, 0}, {0, 1},
+                        {-1, 0}, {0, -1}};
+        ArrayList<Point> result = new ArrayList<>();
+
+        for(int[] dir: dirs){
+            if (0 <= (aPoint.getX() + dir[0]) && (aPoint.getX() + dir[0]) < BOARD_WIDTH
+                    && (0 <= (aPoint.getY() + dir[1]) && (aPoint.getY() + dir[1]) < BOARD_HEIGHT)){
+
+                Point node = returnPointWithCost(aPoint.getX() + dir[0], aPoint.getY() + dir[1]);
+                result.add(node);
+            }
+        }
+        Point[] arr = new Point[result.size()];
+        return result.toArray(arr);
+    }
+
+    Point returnPointWithCost(int aX, int aY) {
+        Point node = new Point(aX, aY);
+        if(isTileTaken(node)){
+            return new Point(aX, aY, Double.MAX_VALUE);
+        } else {
+            return new Point(aX, aY, DEFAULT_COST);
+        }
+    }
+
+    Point[] getNeighborsForFlyingCreature(Point aPoint) {
+        return null;
+    }
+
+    Point getCurrentPointCost(Point aPoint) {
+        if(isTileTaken(aPoint)) {
+            return new Point(aPoint.getX(), aPoint.getY(), Double.MAX_VALUE);
+        } else {
+            return new Point(aPoint.getX(), aPoint.getY(), DEFAULT_COST);
+        }
+    }
+
     void move(Creature aCreature, Point aTargetPoint1){
         move(get(aCreature), aTargetPoint1);
     }
@@ -52,7 +92,6 @@ class Board {
     void move(Point aSourcePoint, Point aTargetPoint1) {
         throwExceptionWhenIsOutsideMap(aTargetPoint1);
         throwExceptionIfTileIsTaken(aTargetPoint1);
-
         Creature creatureFromSourcePoint = map.get(aSourcePoint);
         map.remove(aSourcePoint);
         map.put(aTargetPoint1,creatureFromSourcePoint);
@@ -60,11 +99,14 @@ class Board {
 
     boolean canMove(Creature aCreature, int aX, int aY) {
         throwExceptionWhenIsOutsideMap(new Point(aX,aY));
+
         if (!map.containsValue(aCreature)){
             throw new IllegalStateException("Creature isn't in board");
         }
         Point currentPosition = get(aCreature);
+        Point[] points = aStar.findPath(aX, aY, aCreature);
         double distance = currentPosition.distance(new Point(aX,aY));
-        return distance <= aCreature.getMoveRange() && !isTileTaken(new Point(aX,aY));
+
+        return distance <= aCreature.getMoveRange() && !isTileTaken(new Point(aX,aY)) && points.length <= aCreature.getMoveRange();
     }
 }
