@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.sdk.creatures.EconomyNecropolisFactory;
 import pl.sdk.hero.EconomyHero;
+import pl.sdk.hero.EconomyHeroFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,11 +14,12 @@ class EconomyEngineTest {
     private EconomyHero h1;
     private EconomyHero h2;
     private EconomyNecropolisFactory creatureFactory;
+    private EconomyHeroFactory economyHeroFactory;
 
     @BeforeEach
     void init(){
-        h1 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
-        h2 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
+        h1 = economyHeroFactory.create("Clavius",1000);
+        h2 = economyHeroFactory.create("Clavius",1000);
         economyEngine = new EconomyEngine(h1, h2);
         creatureFactory = new EconomyNecropolisFactory();
     }

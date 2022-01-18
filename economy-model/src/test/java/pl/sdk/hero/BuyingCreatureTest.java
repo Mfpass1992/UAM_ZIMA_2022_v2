@@ -11,14 +11,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class BuyingCreatureTest {
 
     private EconomyHero hero1;
+    private final EconomyHeroFactory economyHeroFactory = new EconomyHeroFactory();
     private final EconomyNecropolisFactory creatureFactory = new EconomyNecropolisFactory();
     private EconomyEngine economyEngine;
     private EconomyHero hero2;
 
     @BeforeEach
     void init() {
-        hero1 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
-        hero2 = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
+        hero1 = economyHeroFactory.create("Clavius",1000);
+        hero2 =economyHeroFactory.create("Clavius", 1000);
         economyEngine = new EconomyEngine(hero1, hero2);
     }
 
