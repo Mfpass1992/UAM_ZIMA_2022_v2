@@ -17,7 +17,7 @@ class PointTest {
 
         assertEquals(1.0,p00.distance(p10));
         assertEquals(1.0,p00.distance(p01));
-        assertEquals(Math.sqrt(2),p00.distance(p11));
-        assertEquals(Math.sqrt(200),p00.distance(p1010));
+        assertEquals(2.0,p00.distance(p11));
+        assertEquals(20.0, p00.distance(p1010));
     }
 }

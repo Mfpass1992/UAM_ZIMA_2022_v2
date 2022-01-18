@@ -1,15 +1,22 @@
 package pl.sdk.hero;
 
-enum HeroStatistic implements HeroStatisticIf{
-    // NECROPOLIS
-    CLAVIUS("NECROPOLIS","Clavius", 1,2,2,1,0,0),
-    GALTHRAN("NECROPOLIS","Galthran",1,2,2,1,0,0),
-    ISRA("NECROPOLIS","Isra",1,2,2,1,0,0),
-    AISLINN("NECROPOLIS","Aislinn", 1,0,2,2,0,0),
-    NAGASH("NECROPOLIS","Nagash",1,0,2,2,0,0),
-    NIMBUS("NECROPOLIS","Nimbus", 1,0,2,2,0,0);
+import pl.sdk.creatures.Fraction;
 
-    private final String heroFraction;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public enum HeroStatistic implements HeroStatisticIf{
+    // NECROPOLIS
+    CLAVIUS(Fraction.NECROPOLIS,"Clavius", 1,2,2,1,0,0),
+    GALTHRAN(Fraction.NECROPOLIS,"Galthran",1,2,2,1,0,0),
+    ISRA(Fraction.NECROPOLIS,"Isra",1,2,2,1,0,0),
+    AISLINN(Fraction.NECROPOLIS,"Aislinn", 1,0,2,2,0,0),
+    NAGASH(Fraction.NECROPOLIS,"Nagash",1,0,2,2,0,0),
+    NIMBUS(Fraction.NECROPOLIS,"Nimbus", 1,0,2,2,0,0),
+    CASTLE_MOCK(Fraction.CASTLE,"Nimbus", 1,0,2,2,0,0);
+
+    private final Fraction heroFraction;
     private final String heroName;
     private final int heroAttack;
 
@@ -19,7 +26,7 @@ enum HeroStatistic implements HeroStatisticIf{
     private final int heroMorale;
     private final int heroLuck;
 
-    HeroStatistic(String heroFraction, String heroName, int heroAttack, int heroDefense, int spellPower, int heroKnowledge, int heroMorale, int heroLuck) {
+    HeroStatistic(Fraction heroFraction, String heroName, int heroAttack, int heroDefense, int spellPower, int heroKnowledge, int heroMorale, int heroLuck) {
         this.heroFraction = heroFraction;
         this.heroName = heroName;
         this.heroAttack = heroAttack;
@@ -29,7 +36,7 @@ enum HeroStatistic implements HeroStatisticIf{
         this.heroMorale = heroMorale;
         this.heroLuck = heroLuck;
     }
-    public String getHeroFraction(){ return heroFraction; }
+    public Fraction getHeroFraction(){ return heroFraction; }
 
     public String getHeroName(){
         return heroName;
@@ -57,5 +64,9 @@ enum HeroStatistic implements HeroStatisticIf{
 
     public int getHeroLuck() {
         return heroLuck;
+    }
+
+    public static List<HeroStatistic> getHeroesByFraction(Fraction aFraction){
+        return Stream.of(values()).filter(stats -> stats.heroFraction.equals(aFraction.getFraction()) ).collect(Collectors.toList());
     }
 }

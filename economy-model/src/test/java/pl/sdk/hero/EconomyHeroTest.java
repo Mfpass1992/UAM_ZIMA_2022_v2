@@ -3,6 +3,7 @@ package pl.sdk.hero;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.sdk.creatures.EconomyNecropolisFactory;
+import pl.sdk.creatures.Fraction;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,7 +24,7 @@ class EconomyHeroTest {
     }
     @Test
     void fractionOfHeroShouldBeNecropolis(){
-        assertEquals(economyHero.getHeroFraction(), "NECROPOLIS");
+        assertEquals(economyHero.getFraction(), Fraction.NECROPOLIS);
     }
 
     @Test
@@ -42,6 +43,6 @@ class EconomyHeroTest {
 
     @Test
     void shouldThrowExceptionWhileYouTrySubstractMoreGoldThanHeroHas(){
-        assertThrows(IllegalStateException.class, () -> economyHero.substractGold(3001));
+        assertThrows(IllegalStateException.class, () -> economyHero.subtractGold(3001));
     }
 }

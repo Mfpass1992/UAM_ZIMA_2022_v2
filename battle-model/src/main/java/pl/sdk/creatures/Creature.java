@@ -206,7 +206,7 @@ public class Creature implements PropertyChangeListener {
         private Range<Integer> damage;
         private CalculateDamageStrategy damageCalculator;
         private Integer amount;
-        private Boolean flying;
+        private boolean flying;
 
         BuilderForTesting name (String name){
             this.name = name;
@@ -264,9 +264,6 @@ public class Creature implements PropertyChangeListener {
             }
             if (damage == null){
                 emptyFields.add("damage");
-            }
-            if (flying == null){
-                emptyFields.add("flying");
             }
             if (!emptyFields.isEmpty()){
                 throw new IllegalStateException("These fileds: " + Arrays.toString(emptyFields.toArray()) + " cannot be empty");

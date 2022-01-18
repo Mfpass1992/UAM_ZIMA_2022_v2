@@ -1,7 +1,9 @@
 package pl.sdk.hero;
 
+import pl.sdk.creatures.Fraction;
+
 public interface HeroStatisticIf {
-    String getHeroFraction();
+    Fraction getHeroFraction();
     String getHeroName();
     int getHeroAttack();
     int getHeroDefense();

@@ -35,7 +35,7 @@ public class BattleMapController implements PropertyChangeListener {
         List<Creature> notUpgradedCreatures = new ArrayList<>();
         List<Creature> upgradedCreatures = new ArrayList<>();
         FractionFactory fractionFactory = new FractionFactory();
-        AbstractCreatureFactory castleFactory = fractionFactory.getInstance(Fractions.CASTLE);
+        AbstractCreatureFactory castleFactory = fractionFactory.getInstance(Fraction.CASTLE);
 
         for (int i = 1; i <= 7; i++) {
             notUpgradedCreatures.add(castleFactory.create(false, i, 10));

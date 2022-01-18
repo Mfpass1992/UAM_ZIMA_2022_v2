@@ -14,7 +14,7 @@ class EconomyEngineTest {
     private EconomyHero h1;
     private EconomyHero h2;
     private EconomyNecropolisFactory creatureFactory;
-    private EconomyHeroFactory economyHeroFactory;
+    private final EconomyHeroFactory economyHeroFactory = new EconomyHeroFactory();
 
     @BeforeEach
     void init(){

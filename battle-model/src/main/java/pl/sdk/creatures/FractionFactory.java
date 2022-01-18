@@ -3,7 +3,7 @@ package pl.sdk.creatures;
 public class FractionFactory {
     final static String EXCEPTION_MESSAGE = "Fraction doesn't exist!";
 
-    public AbstractCreatureFactory getInstance(Fractions aFraction) {
+    public AbstractCreatureFactory getInstance(Fraction aFraction) {
 
         switch (aFraction) {
             case CASTLE:
