@@ -32,16 +32,7 @@ class EconomyEngineTest {
     }
 
     @Test
-    void shouldCountRoundCorrectly(){
-        assertEquals(1,economyEngine.getRoundNumber());
-        economyEngine.pass();
-        assertEquals(1,economyEngine.getRoundNumber());
-        economyEngine.pass();
-        assertEquals(2,economyEngine.getRoundNumber());
-    }
-
-    @Test
-    void shouldBuyCreatureCreatureInCorrectHero(){
+    void shouldBuyCreatureInCorrectHero(){
         economyEngine.buy(creatureFactory.create(false,1,1));
         assertEquals(940, h1.getGold());
         assertEquals(1000, h2.getGold());

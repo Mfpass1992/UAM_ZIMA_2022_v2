@@ -26,9 +26,9 @@ public class Creature implements PropertyChangeListener {
         currentHp = stats.getMaxHp();
     }
 
-    public void attack(Creature aDefender) {
+    public void attack(Creature aDefender, float modifier) {
         if (isAlive()){
-            int damageToDeal = calculateDamage(this, aDefender);
+            int damageToDeal = (int) (calculateDamage(this, aDefender) * modifier);
             aDefender.applyDamage(damageToDeal);
             counterAttack(aDefender);
         }
@@ -112,6 +112,10 @@ public class Creature implements PropertyChangeListener {
         return amount;
     }
 
+    public boolean isFlying(){
+        return stats.isFlying();
+    }
+
     public String currentHealth() {
         StringBuilder sb = new StringBuilder();
         sb.append(getCurrentHp());
@@ -153,7 +157,7 @@ public class Creature implements PropertyChangeListener {
         Builder statistic (CreatureStatisticIf aStats){
             this.stats = aStats;
             return this;
-        };
+        }
         Builder amount(int amount){
             this.amount=amount;
             return this;
@@ -202,6 +206,7 @@ public class Creature implements PropertyChangeListener {
         private Range<Integer> damage;
         private CalculateDamageStrategy damageCalculator;
         private Integer amount;
+        private Boolean flying;
 
         BuilderForTesting name (String name){
             this.name = name;
@@ -226,13 +231,17 @@ public class Creature implements PropertyChangeListener {
         BuilderForTesting damage (Range<Integer> damage){
             this.damage = damage;
             return this;
-        };
+        }
         BuilderForTesting amount(int amount){
             this.amount=amount;
             return this;
         }
         BuilderForTesting damageCalculator (CalculateDamageStrategy aCalculateDamageStrategy){
             this.damageCalculator = aCalculateDamageStrategy;
+            return this;
+        }
+        BuilderForTesting flying (boolean flying){
+            this.flying = flying;
             return this;
         }
 
@@ -256,11 +265,14 @@ public class Creature implements PropertyChangeListener {
             if (damage == null){
                 emptyFields.add("damage");
             }
+            if (flying == null){
+                emptyFields.add("flying");
+            }
             if (!emptyFields.isEmpty()){
                 throw new IllegalStateException("These fileds: " + Arrays.toString(emptyFields.toArray()) + " cannot be empty");
             }
 
-            CreatureStatisticIf stats = new CreatureStatisticForTesting(name, attack, armor, maxHp, moveRange, damage);
+            CreatureStatisticIf stats = new CreatureStatisticForTesting(name, attack, armor, maxHp, moveRange, damage, flying);
             Creature ret = createInstance(stats);
             if(amount == null){
                 ret.amount=1;

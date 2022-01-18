@@ -10,14 +10,16 @@ import com.google.common.collect.Range;
         private final int maxHp;
         private final int moveRange;
         private final Range<Integer> damage;
+        private final boolean isFlying;
 
-        CreatureStatisticForTesting(String aName, int aAttack, int aArmor, int aMaxHp, int aMoveRange, Range<Integer> aDamage) {
+        CreatureStatisticForTesting(String aName, int aAttack, int aArmor, int aMaxHp, int aMoveRange, Range<Integer> aDamage, boolean aIsFlying) {
             name = aName;
             attack = aAttack;
             armor = aArmor;
             maxHp = aMaxHp;
             moveRange = aMoveRange;
             damage = aDamage;
+            isFlying = aIsFlying;
         }
 
         String getName() {
@@ -57,6 +59,11 @@ import com.google.common.collect.Range;
         @Override
         public String getDescription() {
             return "Creature for testing";
+        }
+
+        @Override
+        public boolean isFlying() {
+            return isFlying;
         }
     }
 

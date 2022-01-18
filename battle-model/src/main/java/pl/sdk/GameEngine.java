@@ -6,12 +6,17 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GameEngine {
 
     public final static int BOARD_WIDTH = 20;
     public final static int BOARD_HEIGHT = 15;
+    final static float NO_HAND_TO_HAND_PENALTY = 1.0F;
+    final static float HAND_TO_HAND_PENALTY = 0.5F;
+
+
 
     public static final String CURRENT_CREATURE_CHANGED = "CURRENT_CREATURE_CHANGED";
     public static final String CREATURE_MOVED = "CREATURE_MOVED";
@@ -24,6 +29,7 @@ public class GameEngine {
     private boolean blockAttacking;
     private List<Creature> creatures1;
     private List<Creature> creatures2;
+    private final AStar aStar;
 
     public GameEngine(List<Creature> aCreatures1, List<Creature> aCreatures2) {
         this(aCreatures1, aCreatures2, new Board());
@@ -39,9 +45,9 @@ public class GameEngine {
         twoSidesCreatures.addAll(aCreatures2);
         twoSidesCreatures.sort((c1, c2) -> c2.getMoveRange() - c1.getMoveRange());
         queue = new CreatureTurnQueue(twoSidesCreatures);
-
         twoSidesCreatures.forEach(queue::addObserver);
         observerSupport = new PropertyChangeSupport(this);
+        aStar = new AStar(aBoard);
     }
 
     public void addObserver(String aEventType, PropertyChangeListener aObs) {
@@ -64,6 +70,7 @@ public class GameEngine {
         if (blockMoving) {
             return;
         }
+
         Point oldPosition = board.get(queue.getActiveCreature());
         board.move(queue.getActiveCreature(), aTargetPoint);
         blockMoving = true;
@@ -90,12 +97,22 @@ public class GameEngine {
                 if (splashRange[x][y]) {
                     Creature attackedCreature = board.get(aX + x - 1, aY + y - 1);
                     if (attackedCreature != null){
-                        activeCreature.attack(board.get(aX + x - 1, aY + y - 1));
+                        if (activeCreature.getAttackRange() == 1.0) {
+                            activeCreature.attack(board.get(aX + x - 1, aY + y - 1), NO_HAND_TO_HAND_PENALTY);
+                        } else {
+                            Point attackPoint = new Point(aX + x - 1, aY + y - 1);
+                            double distance = attackPoint.distance(board.get(activeCreature));
+                            if (distance > 1.0) {
+                                activeCreature.attack(board.get(aX + x - 1, aY + y - 1), NO_HAND_TO_HAND_PENALTY);
+                            } else {
+                                activeCreature.attack(board.get(aX + x - 1, aY + y - 1), HAND_TO_HAND_PENALTY);
+                            }
+                        }
                     }
+
                 }
             }
         }
-
 
         blockAttacking = true;
         blockMoving = true;

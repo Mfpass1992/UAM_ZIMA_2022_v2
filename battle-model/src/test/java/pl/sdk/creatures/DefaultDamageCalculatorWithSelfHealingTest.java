@@ -18,6 +18,8 @@ class DefaultDamageCalculatorWithSelfHealingTest {
     private Creature attacker;
     private Creature defender;
     private Random rand;
+    final static float NO_HAND_TO_HAND_PENALTY = 1.0F;
+    final static float HAND_TO_HAND_PENALTY = 0.5F;
 
     @BeforeEach
     void init(){
@@ -47,7 +49,7 @@ class DefaultDamageCalculatorWithSelfHealingTest {
 
     @Test
     void shouldHeal50HpBecauseAttackedFor100(){
-        attacker.attack(defender);
+        attacker.attack(defender, NO_HAND_TO_HAND_PENALTY);
 
         assertEquals(11,attacker.getAmount());
         assertEquals(20,attacker.getCurrentHp());

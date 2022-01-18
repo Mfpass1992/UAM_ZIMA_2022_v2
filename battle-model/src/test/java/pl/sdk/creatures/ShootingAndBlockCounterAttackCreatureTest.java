@@ -12,6 +12,8 @@ public class ShootingAndBlockCounterAttackCreatureTest {
 
     int NOT_IMPORTANT = 5;
     int MORE_THAN_SECOND_CREATURE = NOT_IMPORTANT+1;
+    final static float NO_HAND_TO_HAND_PENALTY = 1.0F;
+    final static float HAND_TO_HAND_PENALTY = 0.5F;
 
     @Test
     void creatureCanAttackEvenDistanceToOpponentIsMoreThanOne(){
@@ -64,7 +66,7 @@ public class ShootingAndBlockCounterAttackCreatureTest {
                 .build();
 
         blockCounterAttackCreature = new BlockCounterAttackCreatureDecorator(new ShootingCreatureDecorator(blockCounterAttackCreature));
-        blockCounterAttackCreature.attack(normalCreature);
+        blockCounterAttackCreature.attack(normalCreature, NO_HAND_TO_HAND_PENALTY);
         blockCounterAttackCreature.getAttackRange();
 
         assertEquals(100,blockCounterAttackCreature.getCurrentHp());

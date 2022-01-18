@@ -15,6 +15,8 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
 public class EndOfTurnTests {
+    final static float NO_HAND_TO_HAND_PENALTY = 1.0F;
+    final static float HAND_TO_HAND_PENALTY = 0.5F;
 
     @Test
     void shouldResetCounterAttackFlagAfterEndOfTurn(){
@@ -23,7 +25,7 @@ public class EndOfTurnTests {
         GameEngine engine = new GameEngine(List.of(attacker), List.of(defender));
 
         assertEquals(true, defender.canCounterAttack());
-        attacker.attack(defender);
+        attacker.attack(defender, NO_HAND_TO_HAND_PENALTY);
         assertEquals(false, defender.canCounterAttack());
 
         engine.pass();
