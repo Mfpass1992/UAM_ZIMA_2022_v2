@@ -1,6 +1,7 @@
 package pl.sdk;
 
 import pl.sdk.creatures.Creature;
+import pl.sdk.spells.DamageSpell;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -21,6 +22,7 @@ public class GameEngine {
     public static final String CURRENT_CREATURE_CHANGED = "CURRENT_CREATURE_CHANGED";
     public static final String CREATURE_MOVED = "CREATURE_MOVED";
     public static final String CREATURE_ATTACKED = "CREATURE_ATTACKED";
+    public static final String SPELL_CASTED = "SPELL_CASTED";
     public static final String END_OF_TURN = "END_OF_TURN";
     private final Board board;
     private final CreatureTurnQueue queue;
@@ -119,6 +121,14 @@ public class GameEngine {
         notifyObservers(new PropertyChangeEvent(this, CREATURE_ATTACKED, null, null));
     }
 
+    public void cast(DamageSpell aSpell, Point aPoint){
+        Creature targetedCreature = board.get(aPoint.getX(), aPoint.getY());
+        aSpell.addTargetCreature(targetedCreature);
+        aSpell.cast();
+        //System.out.println("Spell Casted successfully! " + aSpell.getName());
+        notifyObservers(new PropertyChangeEvent(this, SPELL_CASTED, null, null));
+    }
+
     private void putCreaturesToBoard(List<Creature> aCreatures1, List<Creature> aCreatures2) {
         putCreaturesFromOneSideToBoard(aCreatures1, 0);
         putCreaturesFromOneSideToBoard(aCreatures2, GameEngine.BOARD_WIDTH - 1);
@@ -152,5 +162,18 @@ public class GameEngine {
         }
 
         return !theSamePlayerUnit && board.get(getActiveCreature()).distance(new Point(aX, aY)) <= getActiveCreature().getAttackRange();
+    }
+
+    public boolean canBeTargetedBySPell(int aX, int aY){
+        boolean isP1Creature = creatures1.contains(getActiveCreature());
+        boolean theSamePlayerUnit = true;
+        if(get(aX,aY)!=null){
+            if (isP1Creature) {
+                theSamePlayerUnit = creatures1.contains(board.get(aX, aY));
+            } else {
+                theSamePlayerUnit = creatures2.contains(board.get(aX, aY));
+            }
+        }
+        return !theSamePlayerUnit;
     }
 }
