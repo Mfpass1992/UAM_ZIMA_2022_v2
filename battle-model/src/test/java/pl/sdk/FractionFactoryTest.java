@@ -10,7 +10,7 @@ public class FractionFactoryTest {
     @Test
     public void ShouldCreateInstanceOfCastleFraction() {
         FractionFactory test = new FractionFactory();
-        AbstractCreatureFactory factory = test.getInstance(Fractions.CASTLE);
+        AbstractCreatureFactory factory = test.getInstance(Fraction.CASTLE);
 
         assertTrue(factory instanceof CastleFactory);
     }
@@ -18,7 +18,7 @@ public class FractionFactoryTest {
     @Test
     public void ShouldNotCreateOtherInstaceFractionThanCastle() {
         FractionFactory test = new FractionFactory();
-        AbstractCreatureFactory factory = test.getInstance(Fractions.CASTLE);
+        AbstractCreatureFactory factory = test.getInstance(Fraction.CASTLE);
 
         assertFalse(factory instanceof DungeonFactory);
         assertFalse(factory instanceof NecropolisFactory);
@@ -27,7 +27,7 @@ public class FractionFactoryTest {
     @Test
     public void ShouldCreateInstanceOfDungeonFraction() {
         FractionFactory test = new FractionFactory();
-        AbstractCreatureFactory factory = test.getInstance(Fractions.DUNGEON);
+        AbstractCreatureFactory factory = test.getInstance(Fraction.DUNGEON);
 
         assertTrue(factory instanceof DungeonFactory);
     }
@@ -35,7 +35,7 @@ public class FractionFactoryTest {
     @Test
     public void ShouldNotCreateOtherInstaceFractionThanDungeon() {
         FractionFactory test = new FractionFactory();
-        AbstractCreatureFactory factory = test.getInstance(Fractions.DUNGEON);
+        AbstractCreatureFactory factory = test.getInstance(Fraction.DUNGEON);
 
         assertFalse(factory instanceof CastleFactory);
         assertFalse(factory instanceof NecropolisFactory);
@@ -44,7 +44,7 @@ public class FractionFactoryTest {
     @Test
     public void ShouldCreateInstanceOfNecropolisFraction() {
         FractionFactory test = new FractionFactory();
-        AbstractCreatureFactory factory = test.getInstance(Fractions.NECROPOLIS);
+        AbstractCreatureFactory factory = test.getInstance(Fraction.NECROPOLIS);
 
         assertTrue(factory instanceof NecropolisFactory);
     }
@@ -52,7 +52,7 @@ public class FractionFactoryTest {
     @Test
     public void ShouldNotCreateOtherInstaceFractionThanNecropolis() {
         FractionFactory test = new FractionFactory();
-        AbstractCreatureFactory factory = test.getInstance(Fractions.NECROPOLIS);
+        AbstractCreatureFactory factory = test.getInstance(Fraction.NECROPOLIS);
 
         assertFalse(factory instanceof DungeonFactory);
         assertFalse(factory instanceof CastleFactory);

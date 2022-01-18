@@ -1,9 +1,9 @@
 package pl.sdk.hero;
 
 import pl.sdk.creatures.EconomyCreature;
+import pl.sdk.creatures.Fraction;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class EconomyHero {
@@ -14,6 +14,7 @@ public class EconomyHero {
     // private List<Spell> spellList;
     private final List<EconomyCreature> creatureList;
     private int gold;
+
     public EconomyHero(HeroStatistic aHeroStatistics, int aGold) {
         heroStatistic = aHeroStatistics;
         gold = aGold;
@@ -35,21 +36,19 @@ public class EconomyHero {
         gold += aAmount;
     }
 
-    public Fraction getFraction() { return fraction; }
+    public Fraction getFraction() { return heroStatistic.getHeroFraction(); }
 
     public List<EconomyCreature> getCreatures() {
         return List.copyOf(creatureList);
     }
 
 
-    void subtractGold( int aAmount){
+    void subtractGold(int aAmount){
         if (aAmount > gold){
             throw new IllegalStateException("Hero has not enought money");
         }
         gold -= aAmount;
     }
-
-    public String getHeroFraction(){ return heroStatistic.getHeroFraction(); }
 
     public String getHeroName(){ return heroStatistic.getHeroName(); }
 

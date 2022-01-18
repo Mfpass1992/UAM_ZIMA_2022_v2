@@ -49,7 +49,7 @@ class DefaultDamageCalculatorWithSelfHealingTest {
 
     @Test
     void shouldHeal50HpBecauseAttackedFor100(){
-        attacker.attack(defender, NO_HAND_TO_HAND_PENALTY);
+        attacker.attack(defender);
 
         assertEquals(11,attacker.getAmount());
         assertEquals(20,attacker.getCurrentHp());

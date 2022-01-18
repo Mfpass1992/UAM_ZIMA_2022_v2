@@ -1,6 +1,6 @@
 package pl.sdk.creatures;
 
-public enum Fractions implements FractionsIf{
+public enum Fraction implements FractionsIf{
 
     NECROPOLIS("Necropolis"),
     CASTLE("Caste"),
@@ -9,7 +9,7 @@ public enum Fractions implements FractionsIf{
 
     private final String fraction;
 
-    Fractions(String aFraction) {
+    Fraction(String aFraction) {
         this.fraction = aFraction;
     }
 

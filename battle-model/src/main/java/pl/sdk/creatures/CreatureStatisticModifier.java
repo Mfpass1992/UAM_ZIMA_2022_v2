@@ -117,4 +117,9 @@ public class CreatureStatisticModifier implements CreatureStatisticIf {
         if (description == null) throw new UnsupportedOperationException();
         return description;
     }
+
+    @Override
+    public boolean isFlying() {
+        return false;
+    }
 }
