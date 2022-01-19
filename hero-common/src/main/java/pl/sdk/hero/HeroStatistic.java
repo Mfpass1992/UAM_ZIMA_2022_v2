@@ -1,6 +1,13 @@
 package pl.sdk.hero;
 
-enum HeroStatistic implements HeroStatisticIf{
+import pl.sdk.creatures.Fraction;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+public enum HeroStatistic implements HeroStatisticIf{
+    // NECROPOLIS
     CLAVIUS(Fraction.NECROPOLIS,"Clavius", 1,2,2,1,0,0),
     GALTHRAN(Fraction.NECROPOLIS,"Galthran",1,2,2,1,0,0),
     ISRA(Fraction.NECROPOLIS,"Isra",1,2,2,1,0,0),
@@ -70,5 +77,9 @@ enum HeroStatistic implements HeroStatisticIf{
 
     public int getHeroLuck() {
         return heroLuck;
+    }
+
+    public static List<HeroStatistic> getHeroesByFraction(Fraction aFraction){
+        return Stream.of(values()).filter(stats -> stats.heroFraction.equals(aFraction.getFraction()) ).collect(Collectors.toList());
     }
 }

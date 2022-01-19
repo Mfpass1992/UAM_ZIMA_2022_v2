@@ -31,6 +31,11 @@
             <artifactId>economy-model</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>pl.sdk</groupId>
+            <artifactId>hero-common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

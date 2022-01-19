@@ -37,7 +37,7 @@ public class ApplyDamageTest {
                 .damage(Range.closed(100, 100))
                 .build();
 
-        attacker.attack(defender, NO_HAND_TO_HAND_PENALTY);
+        attacker.attack(defender);
 
         assertEquals(9, defender.getAmount());
         assertEquals(100, defender.getCurrentHp());
@@ -54,7 +54,7 @@ public class ApplyDamageTest {
                 .damage(Range.closed(200, 200))
                 .build();
 
-        attacker.attack(defender, NO_HAND_TO_HAND_PENALTY);
+        attacker.attack(defender);
 
         assertEquals(8, defender.getAmount());
         assertEquals(100, defender.getCurrentHp());
@@ -71,7 +71,7 @@ public class ApplyDamageTest {
                 .damage(Range.closed(199, 199))
                 .build();
 
-        attacker.attack(defender, NO_HAND_TO_HAND_PENALTY);
+        attacker.attack(defender);
 
         assertEquals(9, defender.getAmount());
         assertEquals(1, defender.getCurrentHp());
@@ -88,7 +88,7 @@ public class ApplyDamageTest {
                 .damage(Range.closed(99, 99))
                 .build();
 
-        attacker.attack(defender, NO_HAND_TO_HAND_PENALTY);
+        attacker.attack(defender);
 
         assertEquals(10, defender.getAmount());
         assertEquals(1, defender.getCurrentHp());
@@ -105,8 +105,8 @@ public class ApplyDamageTest {
                 .damage(Range.closed(99, 99))
                 .build();
 
-        attacker.attack(defender, NO_HAND_TO_HAND_PENALTY);
-        attacker.attack(defender, NO_HAND_TO_HAND_PENALTY);
+        attacker.attack(defender);
+        attacker.attack(defender);
 
         assertEquals(9, defender.getAmount());
         assertEquals(2, defender.getCurrentHp());

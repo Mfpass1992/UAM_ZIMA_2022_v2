@@ -1,50 +1,71 @@
 package pl.sdk;
 
 import pl.sdk.creatures.Creature;
+import pl.sdk.fields.SpecialField;
+import pl.sdk.fields.SpecialFieldType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static pl.sdk.GameEngine.BOARD_HEIGHT;
 import static pl.sdk.GameEngine.BOARD_WIDTH;
 
 class Board {
 
-    private final Map<Point, Creature> map;
+    private final Map<Point, Creature> creaturesMap;
+    private final Map<Point, SpecialField> specialFieldsMap;
     private final AStar aStar = new AStar(this);
     private final static double DEFAULT_COST = 10.0;
 
     Board() {
-        map = new HashMap<>();
+        creaturesMap = new HashMap<>();
+        specialFieldsMap = new HashMap<>();
     }
 
     void add(Point aPoint, Creature aCreature) {
         throwExceptionWhenIsOutsideMap(aPoint);
-        throwExceptionIfTileIsTaken(aPoint);
-        map.put(aPoint,aCreature);
+        throwExceptionIfTileIsTaken(aCreature, aPoint);
+        creaturesMap.put(aPoint, aCreature);
     }
 
-    private void throwExceptionIfTileIsTaken(Point aPoint) {
-        if (isTileTaken(aPoint)){
+    void addField(Point point, SpecialField specialField) {
+        throwExceptionWhenIsOutsideMap(point);
+        throwExceptionIfTileIsTaken(specialField, point);
+        specialFieldsMap.put(point, specialField);
+    }
+
+    private void throwExceptionIfTileIsTaken(Object object, Point aPoint) {
+        if((object instanceof Creature && creaturesMap.containsKey(aPoint)) || (object instanceof SpecialField && specialFieldsMap.containsKey(aPoint)))
+        {
             throw new IllegalArgumentException("Tile isn't empty");
         }
     }
 
     private boolean isTileTaken(Point aPoint) {
-        return map.containsKey(aPoint);
+        return creaturesMap.containsKey(aPoint);
     }
 
     private void throwExceptionWhenIsOutsideMap(Point aPoint) {
-        if (aPoint.getX() < 0 || aPoint.getX() > BOARD_WIDTH || aPoint.getY() < 0 || aPoint.getY() > BOARD_HEIGHT ) {
+        if (aPoint.getX() < 0 || aPoint.getX() > BOARD_WIDTH || aPoint.getY() < 0 || aPoint.getY() > BOARD_HEIGHT) {
             throw new IllegalArgumentException("You are trying to works outside the map");
         }
     }
 
     Creature get(int aX, int aY) {
-        return map.get(new Point(aX,aY));
+        return creaturesMap.get(new Point(aX, aY));
     }
 
-    Point get(Creature aCreature){
-        return map.keySet().stream().filter(p -> map.get(p).equals(aCreature)).findAny().get();
+    SpecialField getField(int aX, int aY) {
+        return specialFieldsMap.get(new Point(aX, aY));
+    }
+
+    Point get(Creature aCreature) {
+        return creaturesMap.keySet().stream().filter(p -> creaturesMap.get(p).equals(aCreature)).findAny().get();
+    }
+
+    Point get(SpecialField specialField) {
+        return specialFieldsMap.keySet().stream().filter(p -> specialFieldsMap.get(p).equals(specialField)).findAny().get();
     }
 
     Point[] getNeighborsForWalkingCreature(Point aPoint){
@@ -91,22 +112,30 @@ class Board {
 
     void move(Point aSourcePoint, Point aTargetPoint1) {
         throwExceptionWhenIsOutsideMap(aTargetPoint1);
-        throwExceptionIfTileIsTaken(aTargetPoint1);
-        Creature creatureFromSourcePoint = map.get(aSourcePoint);
-        map.remove(aSourcePoint);
-        map.put(aTargetPoint1,creatureFromSourcePoint);
+        throwExceptionIfTileIsTaken(creaturesMap.get(aSourcePoint), aTargetPoint1);
+
+        Creature creatureFromSourcePoint = creaturesMap.get(aSourcePoint);
+        creaturesMap.remove(aSourcePoint);
+        creaturesMap.put(aTargetPoint1, creatureFromSourcePoint);
     }
 
     boolean canMove(Creature aCreature, int aX, int aY) {
-        throwExceptionWhenIsOutsideMap(new Point(aX,aY));
-
-        if (!map.containsValue(aCreature)){
+        throwExceptionWhenIsOutsideMap(new Point(aX, aY));
+        if (!creaturesMap.containsValue(aCreature)) {
             throw new IllegalStateException("Creature isn't in board");
+        }
+        SpecialField field = specialFieldsMap.get(new Point(aX, aY));
+        if(field!= null && field.getType() == SpecialFieldType.OBSTACLE_FIELD){
+            return false;
         }
         Point currentPosition = get(aCreature);
         Point[] points = aStar.findPath(aX, aY, aCreature);
         double distance = currentPosition.distance(new Point(aX,aY));
 
         return distance <= aCreature.getMoveRange() && !isTileTaken(new Point(aX,aY)) && points.length <= aCreature.getMoveRange();
+    }
+
+    public void destroyField(SpecialField specialField) {
+        specialFieldsMap.remove(get(specialField));
     }
 }

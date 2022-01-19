@@ -22,8 +22,8 @@ public class AbstractCreatureDecorator extends Creature{
     }
 
     @Override
-    public void attack(Creature aDefender, float modifier) {
-        decorated.attack(aDefender, modifier);
+    public void attack(Creature aDefender) {
+        decorated.attack(aDefender);
     }
 
     @Override

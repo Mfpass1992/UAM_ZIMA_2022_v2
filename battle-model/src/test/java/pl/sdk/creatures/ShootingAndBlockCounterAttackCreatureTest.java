@@ -66,7 +66,7 @@ public class ShootingAndBlockCounterAttackCreatureTest {
                 .build();
 
         blockCounterAttackCreature = new BlockCounterAttackCreatureDecorator(new ShootingCreatureDecorator(blockCounterAttackCreature));
-        blockCounterAttackCreature.attack(normalCreature, NO_HAND_TO_HAND_PENALTY);
+        blockCounterAttackCreature.attack(normalCreature);
         blockCounterAttackCreature.getAttackRange();
 
         assertEquals(100,blockCounterAttackCreature.getCurrentHp());

@@ -25,7 +25,7 @@ public class EndOfTurnTests {
         GameEngine engine = new GameEngine(List.of(attacker), List.of(defender));
 
         assertEquals(true, defender.canCounterAttack());
-        attacker.attack(defender, NO_HAND_TO_HAND_PENALTY);
+        attacker.attack(defender);
         assertEquals(false, defender.canCounterAttack());
 
         engine.pass();

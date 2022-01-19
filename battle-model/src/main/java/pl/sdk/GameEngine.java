@@ -1,6 +1,9 @@
 package pl.sdk;
 
 import pl.sdk.creatures.Creature;
+import pl.sdk.fields.DestructibleField;
+import pl.sdk.fields.SpecialField;
+import pl.sdk.spells.DamageSpell;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -9,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GameEngine {
+public class GameEngine implements PropertyChangeListener {
 
     public final static int BOARD_WIDTH = 20;
     public final static int BOARD_HEIGHT = 15;
@@ -17,11 +20,12 @@ public class GameEngine {
     final static float HAND_TO_HAND_PENALTY = 0.5F;
 
 
-
     public static final String CURRENT_CREATURE_CHANGED = "CURRENT_CREATURE_CHANGED";
     public static final String CREATURE_MOVED = "CREATURE_MOVED";
     public static final String CREATURE_ATTACKED = "CREATURE_ATTACKED";
+    public static final String SPELL_CASTED = "SPELL_CASTED";
     public static final String END_OF_TURN = "END_OF_TURN";
+    public static final String FIELD_DESTROYED = "FIELD_DESTROYED";
     private final Board board;
     private final CreatureTurnQueue queue;
     private final PropertyChangeSupport observerSupport;
@@ -96,32 +100,45 @@ public class GameEngine {
             for (int y = 0; y < splashRange.length; y++) {
                 if (splashRange[x][y]) {
                     Creature attackedCreature = board.get(aX + x - 1, aY + y - 1);
-                    if (attackedCreature != null){
-                        if (activeCreature.getAttackRange() == 1.0) {
-                            activeCreature.attack(board.get(aX + x - 1, aY + y - 1), NO_HAND_TO_HAND_PENALTY);
-                        } else {
-                            Point attackPoint = new Point(aX + x - 1, aY + y - 1);
-                            double distance = attackPoint.distance(board.get(activeCreature));
-                            if (distance > 1.0) {
-                                activeCreature.attack(board.get(aX + x - 1, aY + y - 1), NO_HAND_TO_HAND_PENALTY);
-                            } else {
-                                activeCreature.attack(board.get(aX + x - 1, aY + y - 1), HAND_TO_HAND_PENALTY);
-                            }
+                    if (attackedCreature != null) {
+                        activeCreature.attack(board.get(aX + x - 1, aY + y - 1));
+                    } else {
+                        SpecialField specialField = board.getField(aX + x - 1, aY + y - 1);
+                        if (specialField != null) {
+                            ((DestructibleField) specialField).applyDamage(activeCreature);
                         }
                     }
-
                 }
             }
         }
+
 
         blockAttacking = true;
         blockMoving = true;
         notifyObservers(new PropertyChangeEvent(this, CREATURE_ATTACKED, null, null));
     }
 
+    public void cast(DamageSpell aSpell, Point aPoint) {
+        Creature targetedCreature = board.get(aPoint.getX(), aPoint.getY());
+        aSpell.addTargetCreature(targetedCreature);
+        aSpell.cast();
+        //System.out.println("Spell Casted successfully! " + aSpell.getName());
+        notifyObservers(new PropertyChangeEvent(this, SPELL_CASTED, null, null));
+    }
+
     private void putCreaturesToBoard(List<Creature> aCreatures1, List<Creature> aCreatures2) {
         putCreaturesFromOneSideToBoard(aCreatures1, 0);
         putCreaturesFromOneSideToBoard(aCreatures2, GameEngine.BOARD_WIDTH - 1);
+    }
+
+    public void insertSpecialFieldToBoard(Point point, SpecialField specialField) {
+        board.addField(point, specialField);
+        queue.addObserver(specialField);
+        specialField.addObserver(this);
+    }
+
+    public void destroySpecialField(SpecialField specialField) {
+        board.destroyField(specialField);
     }
 
     private void putCreaturesFromOneSideToBoard(List<Creature> aCreatures, int aX) {
@@ -132,6 +149,10 @@ public class GameEngine {
 
     public Creature get(int aX, int aY) {
         return board.get(aX, aY);
+    }
+
+    public SpecialField getField(int aX, int aY) {
+        return board.getField(aX, aY);
     }
 
     public Creature getActiveCreature() {
@@ -152,5 +173,25 @@ public class GameEngine {
         }
 
         return !theSamePlayerUnit && board.get(getActiveCreature()).distance(new Point(aX, aY)) <= getActiveCreature().getAttackRange();
+    }
+
+    public boolean canBeTargetedBySPell(int aX, int aY) {
+        boolean isP1Creature = creatures1.contains(getActiveCreature());
+        boolean theSamePlayerUnit = true;
+        if (get(aX, aY) != null) {
+            if (isP1Creature) {
+                theSamePlayerUnit = creatures1.contains(board.get(aX, aY));
+            } else {
+                theSamePlayerUnit = creatures2.contains(board.get(aX, aY));
+            }
+        }
+        return !theSamePlayerUnit;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent event) {
+        if (event.getPropertyName().equals(FIELD_DESTROYED)) {
+            board.destroyField((SpecialField) event.getSource());
+        }
     }
 }

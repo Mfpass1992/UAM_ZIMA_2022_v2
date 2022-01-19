@@ -4,7 +4,7 @@ import com.google.common.collect.Range;
 
 import java.beans.PropertyChangeEvent;
 
-class HealAfterAttackCreatureDecorator extends AbstractCreatureDecorator{
+class HealAfterAttackCreatureDecorator extends AbstractCreatureDecorator {
 
     private double selfHealingPercentage;
 
@@ -14,9 +14,9 @@ class HealAfterAttackCreatureDecorator extends AbstractCreatureDecorator{
     }
 
     @Override
-    public void attack(Creature aDefender, float modifier) {
-        if (getDecorated().isAlive()){
-            int damageToDeal = (int) (getDecorated().calculateDamage(this, aDefender) * modifier);
+    public void attack(Creature aDefender) {
+        if (getDecorated().isAlive()) {
+            int damageToDeal = getDecorated().calculateDamage(this, aDefender);
             aDefender.applyDamage(damageToDeal);
             healAfterAttack(damageToDeal);
             getDecorated().counterAttack(aDefender);
@@ -24,7 +24,7 @@ class HealAfterAttackCreatureDecorator extends AbstractCreatureDecorator{
     }
 
     private void healAfterAttack(int aDamageToDeal) {
-        applyDamage((int)(-aDamageToDeal * selfHealingPercentage));
+        applyDamage((int) (-aDamageToDeal * selfHealingPercentage));
     }
 
 }

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import pl.sdk.converter.EcoBattleConverter;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.EconomyNecropolisFactory;
+import pl.sdk.creatures.Fraction;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ class EcoBattleConverterTest {
 
     @Test
     void shouldConvertCreaturesCorrectly(){
-        EconomyHero ecoHero = new EconomyHero(EconomyHero.Fraction.NECROPOLIS, 1000);
+        EconomyHero ecoHero = new EconomyHero(HeroStatistic.CLAVIUS, 1000);
         EconomyNecropolisFactory factory = new EconomyNecropolisFactory();
         ecoHero.addCreature(factory.create(false,1,1));
         ecoHero.addCreature(factory.create(false,2,2));

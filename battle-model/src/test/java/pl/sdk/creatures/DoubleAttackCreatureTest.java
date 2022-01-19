@@ -44,7 +44,7 @@ public class DoubleAttackCreatureTest {
 
         CalculateDamageStrategy calc = new DefaultCalculateStrategy();
 
-        doubleAttackCreature.attack(normalCreature, NO_HAND_TO_HAND_PENALTY);
+        doubleAttackCreature.attack(normalCreature);
         assertEquals(50, normalCreature.getCurrentHp());
 
 
