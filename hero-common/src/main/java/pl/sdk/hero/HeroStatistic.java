@@ -1,25 +1,38 @@
 package pl.sdk.hero;
 
 enum HeroStatistic implements HeroStatisticIf{
-    // NECROPOLIS
-    CLAVIUS("NECROPOLIS","Clavius", 1,2,2,1,0,0),
-    GALTHRAN("NECROPOLIS","Galthran",1,2,2,1,0,0),
-    ISRA("NECROPOLIS","Isra",1,2,2,1,0,0),
-    AISLINN("NECROPOLIS","Aislinn", 1,0,2,2,0,0),
-    NAGASH("NECROPOLIS","Nagash",1,0,2,2,0,0),
-    NIMBUS("NECROPOLIS","Nimbus", 1,0,2,2,0,0);
+    CLAVIUS(Fraction.NECROPOLIS,"Clavius", 1,2,2,1,0,0),
+    GALTHRAN(Fraction.NECROPOLIS,"Galthran",1,2,2,1,0,0),
+    ISRA(Fraction.NECROPOLIS,"Isra",1,2,2,1,0,0),
+    AISLINN(Fraction.NECROPOLIS,"Aislinn", 1,0,2,2,0,0),
+    NAGASH(Fraction.NECROPOLIS,"Nagash",1,0,2,2,0,0),
+    NIMBUS(Fraction.NECROPOLIS,"Nimbus", 1,0,2,2,0,0),
+    // CASTLE
+    EDRIC(Fraction.CASTLE, "Edric", 2,2,1,1,0,0),
+    ORRIN(Fraction.CASTLE, "Orrin", 2,2,1,1,0,0),
+    SORSHA(Fraction.CASTLE, "Sorsha", 2,2,1,1,0,0),
+    CAITLIN(Fraction.CASTLE, "Caitlin", 1,0,2,2,0,0),
+    LOYNIS(Fraction.CASTLE, "Loynis", 1,0,2,2,0,0),
+    SANYA(Fraction.CASTLE, "Sanya", 1,0,2,2,0,0),
+    // DUNGEON
+    AJIT(Fraction.DUNGEON, "Ajit", 2,2,1,1,0,0),
+    ARLACH(Fraction.DUNGEON, "Arlach", 2,2,1,1,0,0),
+    DACE(Fraction.DUNGEON, "Dace", 2,2,1,1,0,0),
+    ALMAR(Fraction.DUNGEON, "Alamar", 0,0,3,2,0,0),
+    DARKSTORN(Fraction.DUNGEON, "Darkstorn", 0,0,3,2,0,0),
+    DEEMER(Fraction.DUNGEON, "Deemer", 0,0,3,2,0,0);
 
-    private final String heroFraction;
+
+    private final Fraction heroFraction;
     private final String heroName;
     private final int heroAttack;
-
     private final int heroDefense;
     private final int spellPower;
     private final int heroKnowledge;
     private final int heroMorale;
     private final int heroLuck;
 
-    HeroStatistic(String heroFraction, String heroName, int heroAttack, int heroDefense, int spellPower, int heroKnowledge, int heroMorale, int heroLuck) {
+    HeroStatistic(Fraction heroFraction, String heroName, int heroAttack, int heroDefense, int spellPower, int heroKnowledge, int heroMorale, int heroLuck) {
         this.heroFraction = heroFraction;
         this.heroName = heroName;
         this.heroAttack = heroAttack;
@@ -29,7 +42,7 @@ enum HeroStatistic implements HeroStatisticIf{
         this.heroMorale = heroMorale;
         this.heroLuck = heroLuck;
     }
-    public String getHeroFraction(){ return heroFraction; }
+    public Fraction getHeroFraction(){ return heroFraction; }
 
     public String getHeroName(){
         return heroName;

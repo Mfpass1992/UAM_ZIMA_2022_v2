@@ -20,8 +20,13 @@ public class EconomyStart extends Application
             20000
         ) ).showDialog();
         else heroes = List.of(
+<<<<<<< Updated upstream
             new EconomyHero( EconomyHero.Fraction.NECROPOLIS, 20000 ),
             new EconomyHero( EconomyHero.Fraction.NECROPOLIS, 20000 )
+=======
+            new EconomyHero( HeroStatistic.AISLINN, 20000 ),
+            new EconomyHero( HeroStatistic.EDRIC, 20000 )
+>>>>>>> Stashed changes
         );
 
         loadEconomy( aStage, heroes );

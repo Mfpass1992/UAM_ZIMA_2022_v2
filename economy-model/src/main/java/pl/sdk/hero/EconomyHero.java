@@ -8,13 +8,14 @@ import java.util.List;
 
 public class EconomyHero {
 
-    private HeroStatistic heroStatistic;
+    private HeroStatisticIf heroStatistic;
 
     // private List<EconomyArtifact> artifactsList;
     // private List<Spell> spellList;
     private final List<EconomyCreature> creatureList;
     private int gold;
-    public EconomyHero(HeroStatistic aHeroStatistics, int aGold) {
+
+    public EconomyHero(HeroStatisticIf aHeroStatistics, int aGold) {
         heroStatistic = aHeroStatistics;
         gold = aGold;
         creatureList = new ArrayList<>();
