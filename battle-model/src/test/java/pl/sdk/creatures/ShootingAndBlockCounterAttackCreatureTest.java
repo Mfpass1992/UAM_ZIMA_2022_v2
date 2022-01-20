@@ -3,6 +3,7 @@ package pl.sdk.creatures;
 import com.google.common.collect.Range;
 import org.junit.jupiter.api.Test;
 import pl.sdk.GameEngine;
+import pl.sdk.Hero;
 
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class ShootingAndBlockCounterAttackCreatureTest {
                 .moveRange(NOT_IMPORTANT)
                 .amount(NOT_IMPORTANT)
                 .build();
-        GameEngine engine = new GameEngine(List.of(shootingCreature), List.of(normalCreature));
+        GameEngine engine = new GameEngine(new Hero(List.of(shootingCreature)), new Hero(List.of(normalCreature)));
 
         assertTrue(engine.canAttack(GameEngine.BOARD_WIDTH-1,1));
 
