@@ -2,7 +2,9 @@ package pl.sdk.creatures;
 
 import static pl.sdk.creatures.CreatureStatisticModifier.sumOfStatistics;
 
-public class NecropolisFactory implements AbstractCreatureFactory{
+import com.google.common.collect.Range;
+
+public class NecropolisFactory implements AbstractCreatureFactory {
 
     private static final String EXCEPTION_MESSAGE = "We support tiers from 1 to 7";
     private CreatureStatisticModifier statisticModifier;
@@ -20,6 +22,17 @@ public class NecropolisFactory implements AbstractCreatureFactory{
                 .statistic(CreatureStatistic.TEST)
                 .build();
     }
+
+    public static Creature createForDestructibleField(int hp) {
+        return new Creature.Builder()
+                .statistic(
+                        new CreatureStatisticForTesting(
+                                "field", 0, 0, hp, 0, Range.closed(0, 0), false
+                        )
+                )
+                .build();
+    }
+
     public static Creature createDefaultForTests2() {
         return new Creature.Builder()
                 .statistic(CreatureStatistic.TEST2)

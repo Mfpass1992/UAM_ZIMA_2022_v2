@@ -26,9 +26,9 @@ public class Creature implements PropertyChangeListener {
         currentHp = stats.getMaxHp();
     }
 
-    public void attack(Creature aDefender, float modifier) {
+    public void attack(Creature aDefender) {
         if (isAlive()){
-            int damageToDeal = (int) (calculateDamage(this, aDefender) * modifier);
+            int damageToDeal = calculateDamage(this, aDefender);
             aDefender.applyDamage(damageToDeal);
             counterAttack(aDefender);
         }

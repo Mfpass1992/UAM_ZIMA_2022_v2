@@ -44,7 +44,7 @@ class AttackCreatureTest {
                 .damage(Range.closed(5,5))
                 .build();
 
-        attacker.attack(defender, NO_HAND_TO_HAND_PENALTY);
+        attacker.attack(defender);
 
         assertEquals(80,defender.getCurrentHp());
     }
@@ -68,7 +68,7 @@ class AttackCreatureTest {
                 .damage(Range.closed(NOT_IMPORTANT,NOT_IMPORTANT))
                 .build();
 
-        attacker.attack(defender, NO_HAND_TO_HAND_PENALTY);
+        attacker.attack(defender);
 
         assertEquals(78,defender.getCurrentHp());
     }
@@ -91,7 +91,7 @@ class AttackCreatureTest {
                 .moveRange(NOT_IMPORTANT)
                 .damage(Range.closed(NOT_IMPORTANT,NOT_IMPORTANT))
                 .build();
-        attacker.attack(defender, NO_HAND_TO_HAND_PENALTY);
+        attacker.attack(defender);
 
         assertEquals(87,defender.getCurrentHp());
     }
@@ -114,7 +114,7 @@ class AttackCreatureTest {
                 .moveRange(NOT_IMPORTANT)
                 .damage(Range.closed(NOT_IMPORTANT,NOT_IMPORTANT))
                 .build();
-        attacker.attack(defender, NO_HAND_TO_HAND_PENALTY);
+        attacker.attack(defender);
 
         assertEquals(74,defender.getCurrentHp());
     }

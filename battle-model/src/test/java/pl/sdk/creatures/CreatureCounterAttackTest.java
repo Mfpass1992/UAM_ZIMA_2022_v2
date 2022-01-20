@@ -30,7 +30,7 @@ class CreatureCounterAttackTest {
                 .damage(Range.closed(10,10))
                 .build();
 
-        attacker.attack(defender, NO_HAND_TO_HAND_PENALTY);
+        attacker.attack(defender);
 
         assertEquals(90,attacker.getCurrentHp());
     }
@@ -62,8 +62,8 @@ class CreatureCounterAttackTest {
                 .damage(Range.closed(10,10))
                 .build();
 
-        attacker.attack(defender, NO_HAND_TO_HAND_PENALTY);
-        attacker2.attack(defender, NO_HAND_TO_HAND_PENALTY);
+        attacker.attack(defender);
+        attacker2.attack(defender);
 
         assertEquals(90,attacker.getCurrentHp());
         assertEquals(100,attacker2.getCurrentHp());
