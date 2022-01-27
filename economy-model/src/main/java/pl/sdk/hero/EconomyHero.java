@@ -50,6 +50,8 @@ public class EconomyHero {
         gold -= aAmount;
     }
 
+    public HeroStatistic getHeroStatistic() { return heroStatistic; }
+
     public String getHeroName(){ return heroStatistic.getHeroName(); }
 
     public int getHeroAttack(){ return heroStatistic.getHeroAttack(); }

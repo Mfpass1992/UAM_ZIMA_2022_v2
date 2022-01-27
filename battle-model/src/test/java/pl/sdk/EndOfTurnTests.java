@@ -17,12 +17,15 @@ import static org.mockito.Mockito.verify;
 public class EndOfTurnTests {
     final static float NO_HAND_TO_HAND_PENALTY = 1.0F;
     final static float HAND_TO_HAND_PENALTY = 0.5F;
+    Hero hero1,hero2;
 
     @Test
     void shouldResetCounterAttackFlagAfterEndOfTurn(){
         Creature attacker = NecropolisFactory.createDefaultForTests();
         Creature defender = NecropolisFactory.createDefaultForTests();
-        GameEngine engine = new GameEngine(List.of(attacker), List.of(defender));
+        hero1 = new Hero(List.of(attacker));
+        hero2 = new Hero(List.of(defender));
+        GameEngine engine = new GameEngine(hero1, hero2);
 
         assertEquals(true, defender.canCounterAttack());
         attacker.attack(defender);
@@ -37,7 +40,9 @@ public class EndOfTurnTests {
     void shouldCallPropertyChangeAfterEndOfTurn(){
         Creature attacker = spy(Creature.class);
         Creature defender = NecropolisFactory.createDefaultForTests();
-        GameEngine engine = new GameEngine(List.of(attacker), List.of(defender));
+        hero1 = new Hero(List.of(attacker));
+        hero2 = new Hero(List.of(defender));
+        GameEngine engine = new GameEngine(hero1, hero2);
 
         engine.pass();
         engine.pass();

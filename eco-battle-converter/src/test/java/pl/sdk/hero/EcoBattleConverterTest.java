@@ -2,10 +2,10 @@ package pl.sdk.hero;
 
 
 import org.junit.jupiter.api.Test;
+import pl.sdk.Hero;
 import pl.sdk.converter.EcoBattleConverter;
 import pl.sdk.creatures.Creature;
 import pl.sdk.creatures.EconomyNecropolisFactory;
-import pl.sdk.creatures.Fraction;
 
 import java.util.List;
 
@@ -51,5 +51,21 @@ class EcoBattleConverterTest {
         assertEquals(7,convertedCreatures.get(6).getAmount());
     }
 
+    @Test
+    void shouldHaveEconomyHeroStats(){
+        EconomyHero ecoHero = new EconomyHero(HeroStatistic.CLAVIUS, 1000);
+        EconomyNecropolisFactory factory = new EconomyNecropolisFactory();
+
+        ecoHero.addCreature(factory.create(false,1,1));
+
+        Hero convertedHero = EcoBattleConverter.convert(ecoHero);
+
+        assertEquals(ecoHero.getHeroStatistic().getHeroAttack(), convertedHero.getHeroStats().getHeroAttack());
+        assertEquals(ecoHero.getHeroStatistic().getHeroDefense(), convertedHero.getHeroStats().getHeroDefense());
+        assertEquals(ecoHero.getHeroStatistic().getHeroKnowledge(), convertedHero.getHeroStats().getHeroKnowledge());
+        assertEquals(ecoHero.getHeroStatistic().getSpellPower(), convertedHero.getHeroStats().getHeroSpellPower());
+        assertEquals(ecoHero.getHeroStatistic().getHeroMorale(), convertedHero.getHeroStats().getHeroMorale());
+        assertEquals(ecoHero.getHeroStatistic().getHeroLuck(), convertedHero.getHeroStats().getHeroLuck());
+    }
 
 }

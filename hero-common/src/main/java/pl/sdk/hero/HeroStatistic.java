@@ -19,7 +19,6 @@ public enum HeroStatistic implements HeroStatisticIf{
     private final Fraction heroFraction;
     private final String heroName;
     private final int heroAttack;
-
     private final int heroDefense;
     private final int spellPower;
     private final int heroKnowledge;

@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 import pl.sdk.Hero;
 import pl.sdk.creatures.NecropolisFactory;
 import pl.sdk.gui.BattleMapController;
+import pl.sdk.hero.BattleHeroStatistics;
 import pl.sdk.hero.EconomyHero;
 
 import java.io.IOException;
@@ -32,8 +33,10 @@ public class EcoBattleConverter {
 
     public static Hero convert(EconomyHero aPlayer1) {
         NecropolisFactory factory = new NecropolisFactory();
+        BattleHeroStatistics battleHeroStatistics = new BattleHeroStatistics(aPlayer1.getHeroStatistic());
         Hero hero = new Hero(aPlayer1.getCreatures().stream().map(ecoCreature ->
-                factory.create(ecoCreature.isUpgraded(), ecoCreature.getTier(), ecoCreature.getAmount())).collect(Collectors.toList()));
+                factory.create(ecoCreature.isUpgraded(), ecoCreature.getTier(), ecoCreature.getAmount())).collect(Collectors.toList()),
+                battleHeroStatistics);
         return hero;
     }
 }

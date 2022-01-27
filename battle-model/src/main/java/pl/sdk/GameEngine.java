@@ -54,27 +54,6 @@ public class GameEngine implements PropertyChangeListener {
         aStar = new AStar(aBoard);
     }
 
-    @Deprecated
-    public GameEngine(List<Creature> aHero1, List<Creature> aHero2) {
-        this(aHero1, aHero2, new Board());
-    }
-
-    @Deprecated
-    public GameEngine(List<Creature> aCreatures1, List<Creature> aCreatures2, Board aBoard) {
-        board = aBoard;
-        creatures1 = aCreatures1;
-        creatures2 = aCreatures2;
-        putCreaturesToBoard(creatures1, creatures2);
-        List<Creature> twoSidesCreatures = new ArrayList<>();
-        twoSidesCreatures.addAll(creatures1);
-        twoSidesCreatures.addAll(creatures2);
-        twoSidesCreatures.sort((c1, c2) -> c2.getMoveRange() - c1.getMoveRange());
-        queue = new CreatureTurnQueue(twoSidesCreatures);
-        twoSidesCreatures.forEach(queue::addObserver);
-        observerSupport = new PropertyChangeSupport(this);
-        aStar = new AStar(board);
-    }
-
     public void addObserver(String aEventType, PropertyChangeListener aObs) {
         if (END_OF_TURN.equals(aEventType)) {
             queue.addObserver(aObs);

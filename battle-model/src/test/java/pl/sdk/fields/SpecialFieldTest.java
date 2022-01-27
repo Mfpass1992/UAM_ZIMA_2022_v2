@@ -3,6 +3,7 @@ package pl.sdk.fields;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.sdk.GameEngine;
+import pl.sdk.Hero;
 import pl.sdk.MoveType;
 import pl.sdk.Point;
 import pl.sdk.creatures.Creature;
@@ -15,13 +16,15 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SpecialFieldTest {
-
+    private Hero hero1,hero2;
     private GameEngine engine;
     private Creature creature;
     @BeforeEach
     void init(){
         creature = NecropolisFactory.createDefaultForTests();
-        engine = new GameEngine(new ArrayList<>(List.of(creature)), Collections.emptyList());
+        hero1 = new Hero(List.of(creature));
+        hero2 = new Hero(Collections.emptyList());
+        engine = new GameEngine(hero1, hero2);
     }
 
     @Test
